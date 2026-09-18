@@ -162,9 +162,13 @@ export default function Contact() {
               <div style={{ marginTop: 40 }}>
                 <div style={{ color: 'var(--gold)', fontSize: 11, letterSpacing: '0.3em', fontWeight: 700, marginBottom: 14 }}>FOLLOW</div>
                 <div style={{ display: 'flex', gap: 16, flexWrap: 'wrap' }}>
-                  {['Instagram', 'YouTube', 'X'].map((s) => (
-                    <a key={s} href="https://chessbishop.com" style={{ color: 'var(--muted)', textDecoration: 'none', fontSize: 14, borderBottom: '1px solid transparent', transition: 'color 0.25s, border-color 0.25s' }} onMouseEnter={(e) => { e.currentTarget.style.color = 'var(--gold)'; e.currentTarget.style.borderBottomColor = 'var(--gold)' }} onMouseLeave={(e) => { e.currentTarget.style.color = ''; e.currentTarget.style.borderBottomColor = 'transparent' }}>
-                      {s}
+                  {[
+                    { label: 'Instagram', href: 'https://www.instagram.com/chessbishopofficial/' },
+                    { label: 'YouTube', href: 'https://chessbishop.com' },
+                    { label: 'X', href: 'https://chessbishop.com' },
+                  ].map((s) => (
+                    <a key={s.label} href={s.href} target="_blank" rel="noopener noreferrer" style={{ color: 'var(--muted)', textDecoration: 'none', fontSize: 14, borderBottom: '1px solid transparent', transition: 'color 0.25s, border-color 0.25s' }} onMouseEnter={(e) => { e.currentTarget.style.color = 'var(--gold)'; e.currentTarget.style.borderBottomColor = 'var(--gold)' }} onMouseLeave={(e) => { e.currentTarget.style.color = ''; e.currentTarget.style.borderBottomColor = 'transparent' }}>
+                      {s.label}
                     </a>
                   ))}
                 </div>

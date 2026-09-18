@@ -1,10 +1,10 @@
-import { useState, useEffect, useRef, type CSSProperties } from 'react'
-import { Link, useNavigate, useSearchParams } from 'react-router-dom'
+import { useEffect, useState, type CSSProperties } from 'react'
+import { Link, useSearchParams } from 'react-router-dom'
 import EchoText from '../effects/EchoText'
 import AnimatedContent from '../effects/AnimatedContent'
 import SplitText from '../effects/SplitText'
 import SectionBackground from '../components/SectionBackground'
-import { galleryItems, galleryCategories, type GalleryItem } from '../data/site'
+import { galleryItems, galleryCategories, GALLERY_PLACEHOLDER, type GalleryItem } from '../data/site'
 
 const sectionStyle: CSSProperties = { position: 'relative', padding: 'clamp(90px, 14vw, 180px) clamp(20px, 6vw, 72px)' }
 const container: CSSProperties = { maxWidth: 1400, margin: '0 auto', position: 'relative', zIndex: 2 }
@@ -24,13 +24,16 @@ const btnStyle = (active: boolean): CSSProperties => ({
   minHeight: 44,
 })
 
+function coverFor(g: GalleryItem) {
+  return g.images.length
+    ? `url(${g.images[0]}) center / cover no-repeat`
+    : `url(${GALLERY_PLACEHOLDER}) center / 55% no-repeat`
+}
+
 export default function Gallery() {
-  const navigate = useNavigate()
   const [searchParams, setSearchParams] = useSearchParams()
   const param = searchParams.get('filter')
   const [filter, setFilter] = useState<string>(galleryCategories.includes(param as never) ? (param as string) : 'ALL')
-  const [lightIdx, setLightIdx] = useState<number | null>(null)
-  const dialogRef = useRef<HTMLDivElement | null>(null)
   const filtered = filter === 'ALL' ? galleryItems : galleryItems.filter((g) => g.category === filter)
 
   const selectFilter = (c: string) => {
@@ -46,32 +49,6 @@ export default function Gallery() {
       setFilter('ALL')
     }
   }, [searchParams]) // eslint-disable-line react-hooks/exhaustive-deps
-
-  useEffect(() => {
-    if (lightIdx === null) return
-    const previous = document.activeElement as HTMLElement | null
-
-    const close = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') setLightIdx(null)
-      if (e.key === 'ArrowLeft') {
-        e.preventDefault()
-        setLightIdx((prev) => (prev !== null ? (prev - 1 + filtered.length) % filtered.length : null))
-      }
-      if (e.key === 'ArrowRight') {
-        e.preventDefault()
-        setLightIdx((prev) => (prev !== null ? (prev + 1) % filtered.length : null))
-      }
-    }
-
-    document.body.style.overflow = 'hidden'
-    dialogRef.current?.focus()
-    window.addEventListener('keydown', close)
-    return () => {
-      document.body.style.overflow = ''
-      window.removeEventListener('keydown', close)
-      previous?.focus?.()
-    }
-  }, [lightIdx, filtered.length])
 
   return (
     <>
@@ -118,17 +95,11 @@ export default function Gallery() {
 
           <div className="gallery-masonry">
             {filtered.map((g, i) => (
-              <AnimatedContent key={`${filter}-${i}`} delay={i * 0.04} from={{ y: 22 }} className="masonry-item">
-                <button
-                  type="button"
-                  onClick={() => {
-                    if (filter === 'ALL') {
-                      navigate(`/gallery/carousel?start=${i}`)
-                    } else {
-                      setLightIdx(i)
-                    }
-                  }}
-                  aria-label={filter === 'ALL' ? `Open ${g.title} in gallery carousel` : `Open ${g.title} in lightbox`}
+              <AnimatedContent key={`${filter}-${g.slug}`} delay={i * 0.04} from={{ y: 22 }} className="masonry-item">
+                <Link
+                  to={`/gallery/${g.slug}`}
+                  aria-label={`Open ${g.title} gallery`}
+                  className="cb-gallery-tile"
                   style={{
                     display: 'block',
                     width: '100%',
@@ -140,26 +111,27 @@ export default function Gallery() {
                     cursor: 'pointer',
                     textAlign: 'left',
                     aspectRatio: g.tall ? '3/4' : '4/3',
+                    textDecoration: 'none',
+                    backgroundColor: '#0b0f0d',
                   }}
-                  className="cb-gallery-tile"
                 >
                   <div
                     style={{
                       position: 'absolute',
                       inset: 0,
-                      background: g.gradient ? g.gradient : `url(${g.src}) center / cover no-repeat`,
-                      filter: 'brightness(0.72)',
+                      background: coverFor(g),
+                      filter: g.images.length ? 'brightness(0.72)' : 'brightness(0.9)',
                     }}
                   />
-                  <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(180deg, transparent 35%, rgba(5,6,5,0.82))', opacity: 0 }} className="cb-gallery-overlay" />
-                  <div style={{ position: 'absolute', bottom: 12, left: 12, right: 12 }}>
+                  <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(180deg, transparent 35%, rgba(5,6,5,0.85))' }} />
+                  <div style={{ position: 'absolute', bottom: 12, left: 14, right: 14 }}>
                     <div style={{ color: 'var(--gold)', fontSize: 10, letterSpacing: '0.3em', fontWeight: 700 }}>{g.category}</div>
-                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                      <span style={{ fontFamily: 'var(--font-display)', fontSize: 'clamp(14px, 1.1vw, 18px)' }}>{g.title}</span>
-                      <span style={{ color: 'var(--gold)', fontSize: 11, letterSpacing: '0.18em', fontWeight: 700 }}>VIEW →</span>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', gap: 12, marginTop: 4 }}>
+                      <span className="cb-clamp-2" style={{ fontFamily: 'var(--font-display)', fontSize: 'clamp(14px, 1.1vw, 18px)', lineHeight: 1.3 }}>{g.title}</span>
+                      <span style={{ color: 'var(--gold)', fontSize: 11, letterSpacing: '0.18em', fontWeight: 700, flexShrink: 0 }}>VIEW →</span>
                     </div>
                   </div>
-                </button>
+                </Link>
               </AnimatedContent>
             ))}
           </div>
@@ -193,99 +165,6 @@ export default function Gallery() {
           </AnimatedContent>
         </div>
       </section>
-
-      {/* Lightbox */}
-      {lightIdx !== null && (
-        <div
-          ref={dialogRef}
-          role="dialog"
-          aria-modal
-          aria-label={`${filtered[lightIdx].title}, image ${lightIdx + 1} of ${filtered.length}`}
-          tabIndex={-1}
-          onClick={() => setLightIdx(null)}
-          style={{
-            position: 'fixed',
-            inset: 0,
-            zIndex: 200,
-            background: 'rgba(5, 6, 5, 0.94)',
-            backdropFilter: 'blur(10px)',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            padding: 24,
-            cursor: 'zoom-out',
-            overscrollBehavior: 'contain',
-            animation: 'page-enter 0.4s ease both',
-          }}
-        >
-          <button
-            onClick={() => setLightIdx(null)}
-            type="button"
-            aria-label="Close lightbox"
-            style={{
-              position: 'absolute',
-              top: 24,
-              right: 24,
-              background: 'none',
-              border: '1px solid var(--border)',
-              borderRadius: 999,
-              color: 'var(--ivory)',
-              width: 48,
-              height: 48,
-              fontSize: 20,
-              cursor: 'pointer',
-            }}
-          >
-            ✕
-          </button>
-          <button
-            onClick={(e) => { e.stopPropagation(); setLightIdx((prev) => (prev !== null ? (prev - 1 + filtered.length) % filtered.length : null)) }}
-            type="button"
-            aria-label="Previous image"
-            style={{ position: 'absolute', left: 24, background: 'none', border: '1px solid var(--border-gold)', borderRadius: 999, color: 'var(--gold)', width: 52, height: 52, fontSize: 20, cursor: 'pointer' }}
-          >
-            ←
-          </button>
-          <button
-            onClick={(e) => { e.stopPropagation(); setLightIdx((prev) => (prev !== null ? (prev + 1) % filtered.length : null)) }}
-            type="button"
-            aria-label="Next image"
-            style={{ position: 'absolute', right: 24, background: 'none', border: '1px solid var(--border-gold)', borderRadius: 999, color: 'var(--gold)', width: 52, height: 52, fontSize: 20, cursor: 'pointer' }}
-          >
-            →
-          </button>
-          <span aria-hidden="true" style={{ position: 'absolute', bottom: 18, left: '50%', transform: 'translateX(-50%)', color: 'var(--muted)', fontSize: 12, letterSpacing: '0.25em', fontWeight: 700 }}>
-            {lightIdx + 1} / {filtered.length}
-          </span>
-          <LightboxContent item={filtered[lightIdx]} key={`${filter}-${lightIdx}`} />
-        </div>
-      )}
     </>
-  )
-}
-
-function LightboxContent({ item }: { item: GalleryItem }) {
-  const bg = item.gradient ? item.gradient : item.src ? `url(${item.src}) center / contain no-repeat` : 'var(--surface)'
-  return (
-    <div
-      onClick={(e) => e.stopPropagation()}
-      style={{
-        width: 'min(90vw, 900px)',
-        aspectRatio: '4/3',
-        borderRadius: 24,
-        overflow: 'hidden',
-        border: '1px solid var(--border-gold)',
-        position: 'relative',
-        animation: 'page-enter 0.35s ease both',
-        boxShadow: '0 40px 80px -30px rgba(0,0,0,0.8)',
-      }}
-    >
-      <div style={{ position: 'absolute', inset: 0, background: bg }} />
-      <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(180deg, transparent 60%, rgba(5,6,5,0.85))' }} />
-      <div style={{ position: 'absolute', bottom: 20, left: 24, right: 24 }}>
-        <div style={{ color: 'var(--gold)', fontSize: 11, letterSpacing: '0.35em', fontWeight: 700 }}>{item.category}</div>
-        <div style={{ fontFamily: 'var(--font-display)', fontSize: 24, marginTop: 6 }}>{item.title}</div>
-      </div>
-    </div>
   )
 }

@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom'
 import { Camera, Play, AtSign, Briefcase } from 'lucide-react'
 
 const socials = [
-  { label: 'Instagram', href: 'https://instagram.com', Icon: Camera },
+  { label: 'Instagram', href: 'https://www.instagram.com/chessbishopofficial/', Icon: Camera },
   { label: 'YouTube', href: 'https://youtube.com', Icon: Play },
   { label: 'X', href: 'https://x.com', Icon: AtSign },
   { label: 'LinkedIn', href: 'https://linkedin.com', Icon: Briefcase },

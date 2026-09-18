@@ -6,10 +6,12 @@ import Footer from './components/Footer'
 import PageTransition from './components/PageTransition'
 import ChessCursor from './effects/ChessCursor'
 import PostHeroAurora from './effects/PostHeroAurora'
+import FloatingAssistant from './components/FloatingAssistant'
 import Home from './pages/Home'
 import About from './pages/About'
 import Gallery from './pages/Gallery'
 import GalleryCarousel from './pages/GalleryCarousel'
+import GalleryDetail from './pages/GalleryDetail'
 import Career from './pages/Career'
 import CoachApply from './pages/CoachApply'
 import Contact from './pages/Contact'
@@ -28,7 +30,8 @@ function ShellMeta() {
   const { pathname } = useLocation()
 
   useEffect(() => {
-    document.title = PAGE_TITLES[pathname] ?? 'Chessbishop'
+    const title = PAGE_TITLES[pathname]
+    if (title) document.title = title
   }, [pathname])
 
   return null
@@ -53,6 +56,7 @@ function Shell() {
       <div className="bg-page" aria-hidden="true" />
       <PostHeroAurora />
       <ChessCursor />
+      <FloatingAssistant />
       <Navbar />
       <main style={{ flex: 1 }} id="main">
         <PageTransition>
@@ -61,6 +65,7 @@ function Shell() {
             <Route path="/about" element={<About />} />
             <Route path="/gallery" element={<Gallery />} />
             <Route path="/gallery/carousel" element={<GalleryCarousel />} />
+            <Route path="/gallery/:slug" element={<GalleryDetail />} />
             <Route path="/career" element={<Career />} />
             <Route path="/career/apply" element={<CoachApply />} />
             <Route path="/contact" element={<Contact />} />

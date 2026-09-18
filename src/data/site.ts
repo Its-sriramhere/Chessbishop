@@ -1,23 +1,116 @@
+export type GalleryViewer = 'spiral' | 'drift' | 'grid' | 'accordion'
+
 export type GalleryItem = {
-  src?: string
-  gradient?: string
+  slug: string
   title: string
   category: string
+  cover: string
+  images: string[]
+  viewer: GalleryViewer
   tall?: boolean
 }
+
+export const GALLERY_PLACEHOLDER = '/chessbishop-emblem-v2.png'
+
+export const dhoniTrophyImages = Array.from(
+  { length: 32 },
+  (_, i) => `/gallery/dhoni-trophy/dhoni-${String(i + 1).padStart(2, '0')}.jpg`,
+)
+
+const pad2 = (n: number) => String(n).padStart(2, '0')
+
+export const studentsAchievementsImages = Array.from(
+  { length: 26 },
+  (_, i) => `/gallery/students-achievements-and-events/students-${pad2(i + 1)}.jpg`,
+)
+
+export const diceChessImages = Array.from(
+  { length: 4 },
+  (_, i) => `/gallery/dice-chess-diploma-tournament-riga-latvia/dice-${pad2(i + 1)}.jpg`,
+)
+
+export const indorseImages = Array.from(
+  { length: 14 },
+  (_, i) => `/gallery/indorse-2k18-chess-event/indorse-${pad2(i + 1)}.jpg`,
+)
+
+export const rootsImages = Array.from(
+  { length: 15 },
+  (_, i) => `/gallery/roots-of-chessbishop/roots-${pad2(i + 1)}.jpg`,
+)
 
 export const galleryCategories = ['ALL', 'TRAINING', 'TOURNAMENTS', 'EVENTS', 'COMMUNITY'] as const
 
 export const galleryItems: GalleryItem[] = [
-  { src: '/bg-image.png', title: 'Grandmaster Sessions', category: 'TRAINING', tall: true },
-  { src: '/chessbishop-nav-logo.png', title: 'Squad Retreat', category: 'COMMUNITY' },
-  { gradient: 'radial-gradient(120% 120% at 20% 10%, #173c2b 0%, #0a0d0b 55%, #101512 100%)', title: 'Open Rapid 2026', category: 'TOURNAMENTS', tall: true },
-  { src: '/logo.jpeg', title: 'Mentor Meetup', category: 'EVENTS' },
-  { gradient: 'radial-gradient(120% 120% at 85% 15%, #2b1f08 0%, #0a0d0b 50%, #101512 100%)', title: 'Blitz Night', category: 'EVENTS' },
-  { src: '/chessbishop-emblem.png', title: 'Coach Programme', category: 'TRAINING' },
-  { gradient: 'linear-gradient(135deg, #0a0d0b 0%, #173c2b 45%, #63a985 130%)', title: 'National Invitational', category: 'TOURNAMENTS', tall: true },
-  { src: '/chessbishop-wordmark.png', title: 'Community Open Day', category: 'COMMUNITY' },
+  {
+    slug: 'dhonis-trophy-prize-distribution',
+    title: 'Dhoni’s Trophy Prize Distribution',
+    category: 'TOURNAMENTS',
+    cover: dhoniTrophyImages[0],
+    images: dhoniTrophyImages,
+    viewer: 'drift',
+    tall: true,
+  },
+  {
+    slug: 'students-achievements-and-events',
+    title: 'Student’s Achievements and Events',
+    category: 'COMMUNITY',
+    cover: studentsAchievementsImages[0],
+    images: studentsAchievementsImages,
+    viewer: 'accordion',
+    tall: true,
+  },
+  {
+    slug: 'dice-chess-diploma-tournament-riga-latvia',
+    title: 'Dice Chess Diploma Tournament (Riga, Latvia)',
+    category: 'TOURNAMENTS',
+    cover: diceChessImages[0],
+    images: diceChessImages,
+    viewer: 'grid',
+  },
+  {
+    slug: 'indorse-2k18-chess-event',
+    title: 'Indorse 2k18 Chess Event — Private Business School, Tamil Nadu',
+    category: 'EVENTS',
+    cover: indorseImages[0],
+    images: indorseImages,
+    viewer: 'grid',
+  },
+  {
+    slug: 'roots-of-chessbishop',
+    title: 'Roots of Chessbishop',
+    category: 'COMMUNITY',
+    cover: rootsImages[0],
+    images: rootsImages,
+    viewer: 'grid',
+  },
+  {
+    slug: 'tambaram-corporation-inauguration',
+    title: 'Tambaram Corporation Inauguration',
+    category: 'EVENTS',
+    cover: GALLERY_PLACEHOLDER,
+    images: [],
+    viewer: 'grid',
+  },
+  {
+    slug: 'tirupur-corporation-inauguration',
+    title: 'Tirupur Corporation Inauguration',
+    category: 'EVENTS',
+    cover: GALLERY_PLACEHOLDER,
+    images: [],
+    viewer: 'grid',
+  },
+  {
+    slug: 'journey-first-step-nagapattinam',
+    title: 'Journey of the First Step to Nagapattinam',
+    category: 'EVENTS',
+    cover: GALLERY_PLACEHOLDER,
+    images: [],
+    viewer: 'grid',
+  },
 ]
+
+export const getGalleryBySlug = (slug: string) => galleryItems.find((g) => g.slug === slug)
 
 export type Review = {
   name: string

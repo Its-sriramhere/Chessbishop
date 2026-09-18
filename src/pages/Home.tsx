@@ -9,7 +9,7 @@ import SpotlightCard from '../effects/SpotlightCard'
 import ScrollStack from '../effects/ScrollStack'
 import ChessbishopReveal from '../effects/ChessbishopReveal'
 import SectionBackground from '../components/SectionBackground'
-import { galleryItems, reviews } from '../data/site'
+import { galleryItems, GALLERY_PLACEHOLDER, reviews } from '../data/site'
 
 const sectionStyle: React.CSSProperties = { position: 'relative', padding: 'clamp(90px, 14vw, 180px) clamp(20px, 6vw, 72px)' }
 const container: React.CSSProperties = { maxWidth: 1240, margin: '0 auto', position: 'relative', zIndex: 2 }
@@ -241,24 +241,24 @@ export default function Home() {
                 style={{ gridColumn: g.tall ? 'span 2' : 'span 1', gridRow: g.tall ? 'span 2' : 'span 1', minWidth: 0 }}
               >
                 <Link
-                  to="/gallery"
+                  to={`/gallery/${g.slug}`}
                   className="cb-gallery-tile"
                   aria-label={`${g.title}, ${g.category}`}
-                  style={{ position: 'relative', display: 'block', width: '100%', height: '100%', overflow: 'hidden', borderRadius: 18, border: '1px solid var(--border)', textDecoration: 'none' }}
+                  style={{ position: 'relative', display: 'block', width: '100%', height: '100%', overflow: 'hidden', borderRadius: 18, border: '1px solid var(--border)', textDecoration: 'none', backgroundColor: '#0b0f0d' }}
                 >
                   <div
                     style={{
                       position: 'absolute',
                       inset: 0,
-                      background: g.gradient ? g.gradient : `url(${g.src}) center / cover no-repeat`,
+                      background: g.images.length ? `url(${g.cover}) center / cover no-repeat` : `url(${GALLERY_PLACEHOLDER}) center / 52% no-repeat`,
                       transform: 'scale(1.001)',
-                      filter: 'brightness(0.72)',
+                      filter: g.images.length ? 'brightness(0.72)' : 'brightness(0.9)',
                     }}
                   />
                   <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(180deg, transparent 40%, rgba(5,6,5,0.85))', opacity: 0.9 }} />
                   <div style={{ position: 'absolute', left: 14, bottom: 12, right: 14 }}>
                     <div style={{ color: 'var(--gold)', fontSize: 10, letterSpacing: '0.3em', fontWeight: 700 }}>{g.category}</div>
-                    <div style={{ fontFamily: 'var(--font-display)', fontSize: 'clamp(15px, 1.2vw, 19px)', marginTop: 4 }}>{g.title}</div>
+                    <div className="cb-clamp-2" style={{ fontFamily: 'var(--font-display)', fontSize: 'clamp(15px, 1.2vw, 19px)', marginTop: 4, lineHeight: 1.3 }}>{g.title}</div>
                   </div>
                 </Link>
               </AnimatedContent>

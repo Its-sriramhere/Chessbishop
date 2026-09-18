@@ -24,8 +24,10 @@ export default function Navbar() {
 
   useEffect(() => {
     document.body.style.overflow = open ? 'hidden' : ''
+    document.documentElement.dataset.menuOpen = open ? '1' : '0'
     return () => {
       document.body.style.overflow = ''
+      document.documentElement.dataset.menuOpen = '0'
     }
   }, [open])
 
@@ -44,6 +46,7 @@ export default function Navbar() {
           left: 0,
           right: 0,
           zIndex: 90,
+          paddingTop: 'env(safe-area-inset-top, 0px)',
           backdropFilter: solid ? 'blur(18px) saturate(140%)' : 'none',
           WebkitBackdropFilter: solid ? 'blur(18px) saturate(140%)' : 'none',
           background: solid ? 'rgba(5, 6, 5, 0.75)' : 'transparent',
@@ -131,6 +134,8 @@ export default function Navbar() {
           flexDirection: 'column',
           justifyContent: 'center',
           padding: 'clamp(90px, 16vh, 140px) 8vw',
+          overscrollBehavior: 'contain',
+          overflowY: 'auto',
           transform: open ? 'translateY(0)' : 'translateY(-100%)',
           transition: 'transform 0.55s cubic-bezier(0.76, 0, 0.24, 1)',
           visibility: open ? 'visible' : 'hidden',

@@ -40,7 +40,8 @@ export default function SplitText({ children, className = '', delay = 0, stagger
           scrollTrigger: {
             trigger: el,
             start: 'top 85%',
-            once: true,
+            once: false,
+            toggleActions: 'restart none restart none',
           },
         },
       )

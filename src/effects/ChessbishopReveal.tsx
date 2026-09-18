@@ -19,13 +19,14 @@ export default function ChessbishopReveal({ className = '', label = '' }: Chessb
 
     const io = new IntersectionObserver(
       ([entry]) => {
-        if (!entry.isIntersecting) return
-        io.disconnect()
+        const show = entry.isIntersecting
         line.style.transition = 'width 1s cubic-bezier(0.22,1,0.36,1)'
-        line.style.width = '100%'
-        bishop.style.transition = 'left 1.1s cubic-bezier(0.22,1,0.36,1) 0.15s, opacity 0.4s ease'
-        bishop.style.left = 'calc(100% - 22px)'
-        bishop.style.opacity = '1'
+        line.style.width = show ? '100%' : '0'
+        bishop.style.transition = show
+          ? 'left 1.1s cubic-bezier(0.22,1,0.36,1) 0.15s, opacity 0.4s ease'
+          : 'left 0.7s cubic-bezier(0.22,1,0.36,1), opacity 0.35s ease'
+        bishop.style.left = show ? 'calc(100% - 22px)' : '0'
+        bishop.style.opacity = show ? '1' : '0'
       },
       { threshold: 0.4 },
     )

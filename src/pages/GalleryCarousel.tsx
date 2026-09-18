@@ -7,11 +7,7 @@ import { galleryItems } from '../data/site'
 const sectionStyle: CSSProperties = { position: 'relative', padding: 'clamp(90px, 14vw, 180px) clamp(20px, 6vw, 72px)' }
 const container: CSSProperties = { maxWidth: 1400, margin: '0 auto', position: 'relative', zIndex: 2 }
 
-const IMAGE_POOL = ['/chessbishop-emblem-v2.png', '/chessbishop-wordmark.png', '/logo.jpeg']
-
-function imageFor(src: string | undefined, index: number) {
-  return src ?? IMAGE_POOL[index % IMAGE_POOL.length]
-}
+const IMAGE_POOL = ['/chessbishop-emblem-v2.png']
 
 export default function GalleryCarousel() {
   const [searchParams] = useSearchParams()
@@ -21,8 +17,8 @@ export default function GalleryCarousel() {
 
   const ordered = [...galleryItems.slice(start), ...galleryItems.slice(0, start)]
 
-  const items: DepthCarouselItem[] = ordered.map((g, i) => ({
-    image: imageFor(g.src, i),
+  const items: DepthCarouselItem[] = ordered.map((g) => ({
+    image: g.cover || IMAGE_POOL[0],
     alt: `${g.title} – ${g.category}`,
   }))
 

@@ -57,7 +57,7 @@ export default function CountUp({
     stiffness: 100,
   })
 
-  const isInView = useInView(ref, { once: true, margin: '0px' })
+  const isInView = useInView(ref, { once: false, margin: '0px' })
 
   useEffect(() => {
     if (ref.current) ref.current.textContent = String(formatNumber(direction === 'down' ? to : from, separator))
@@ -65,12 +65,21 @@ export default function CountUp({
   }, [direction, from, to, separator])
 
   useEffect(() => {
-    if (!(isInView && startWhen)) return
+    const startValue = direction === 'down' ? to : from
+    const endValue = direction === 'down' ? from : to
+
+    if (!(isInView && startWhen)) {
+      endedRef.current = false
+      motionValue.set(startValue)
+      springValue.jump(startValue)
+      if (ref.current) ref.current.textContent = String(formatNumber(startValue, separator))
+      return
+    }
 
     if (typeof onStart === 'function') onStart()
 
     const timeoutId = setTimeout(() => {
-      motionValue.set(direction === 'down' ? from : to)
+      motionValue.set(endValue)
     }, delay * 1000)
 
     const unsubscribe = springValue.on('change', (value) => {

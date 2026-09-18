@@ -21,7 +21,7 @@ export default function BlurText({
   delay = 0,
   duration = 0.8,
   stagger = 0.05,
-  once = true,
+  once = false,
 }: BlurTextProps) {
   const ref = useRef<HTMLElement | null>(null)
 
@@ -53,6 +53,7 @@ export default function BlurText({
             trigger: el,
             start: 'top 85%',
             once,
+            toggleActions: once ? 'play none none none' : 'restart none restart none',
           },
         },
       )

@@ -1,5 +1,5 @@
 import { useRef, type CSSProperties, type ReactNode } from 'react'
-import { useHasGoneInline } from './useInView'
+import { useInViewToggle } from './useInView'
 
 type AnimatedContentProps = {
   children: ReactNode
@@ -21,7 +21,7 @@ export default function AnimatedContent({
   as: Tag = 'div',
 }: AnimatedContentProps) {
   const ref = useRef<HTMLDivElement | null>(null)
-  const inView = useHasGoneInline(ref, '0px 0px -12% 0px')
+  const inView = useInViewToggle(ref, '0px 0px -12% 0px')
 
   const hidden: CSSProperties = {
     opacity: from.opacity ?? 0,
