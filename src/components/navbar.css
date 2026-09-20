@@ -201,5 +201,6 @@
   }
   .cb-nav-emblem-wrap {
     height: 38px;
+    transform: translateY(-2px);
   }
 }
