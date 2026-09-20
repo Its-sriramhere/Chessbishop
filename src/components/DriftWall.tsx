@@ -92,9 +92,14 @@ export default function DriftWall({
   const [activeId, setActiveId] = useState<string | null>(null)
   const activeIdRef = useRef<string | null>(null)
   const [reduced, setReduced] = useState(false)
+  const [preview, setPreview] = useState<DriftWallItem | null>(null)
+  const previewRef = useRef<HTMLDivElement | null>(null)
+  const itemByIdRef = useRef(new Map<string, DriftWallItem>())
+  const hoverCapableRef = useRef(true)
 
   useEffect(() => {
     setReduced(prefersReducedMotion())
+    hoverCapableRef.current = window.matchMedia('(hover: hover)').matches
     const mq = window.matchMedia('(prefers-reduced-motion: reduce)')
     const onChange = (e: MediaQueryListEvent) => setReduced(e.matches)
     mq.addEventListener('change', onChange)
@@ -189,6 +194,29 @@ export default function DriftWall({
         }
       }
 
+      const pv = previewRef.current
+      const wall = containerRef.current
+      if (pv && wall) {
+        const rect = wall.getBoundingClientRect()
+        if (rect.width > 0) {
+          const pw = pv.offsetWidth
+          const ph = pv.offsetHeight
+          if (hoverCapableRef.current) {
+            const cx = (pointerDampedRef.current.x + 0.5) * rect.width
+            const cy = (pointerDampedRef.current.y + 0.5) * rect.height
+            let x = cx + 24
+            let y = cy - ph - 28
+            if (x + pw > rect.width - 8) x = cx - pw - 24
+            if (y < 8) y = cy + 24
+            x = Math.max(8, Math.min(x, rect.width - pw - 8))
+            y = Math.max(8, Math.min(y, rect.height - ph - 8))
+            pv.style.transform = `translate3d(${x}px, ${y}px, 0)`
+          } else {
+            pv.style.transform = `translate3d(${Math.max(8, rect.width - pw - 24)}px, 24px, 0)`
+          }
+        }
+      }
+
       rafRef.current = requestAnimationFrame(animate)
     }
 
@@ -204,12 +232,14 @@ export default function DriftWall({
     activeIdRef.current = id
     hoveredColRef.current = index
     setActiveId(id)
+    setPreview(itemByIdRef.current.get(id) ?? null)
   }, [])
 
   const release = useCallback(() => {
     activeIdRef.current = null
     hoveredColRef.current = -1
     setActiveId(null)
+    setPreview(null)
   }, [])
 
   const handlePointerMove = useCallback(
@@ -230,6 +260,7 @@ export default function DriftWall({
       activeIdRef.current = id
       hoveredColRef.current = Number((tile as HTMLElement).dataset.col)
       setActiveId(id)
+      setPreview(itemByIdRef.current.get(id) ?? null)
     },
     [parallax, reduced],
   )
@@ -259,6 +290,7 @@ export default function DriftWall({
   )
 
   const renderTile = (item: DriftWallItem, id: string, colIndex: number) => {
+    itemByIdRef.current.set(id, item)
     const inner = (
       <span className="drift-wall__inner">
         <img src={item.image} alt={item.title ?? ''} loading="lazy" decoding="async" draggable={false} />
@@ -319,8 +351,14 @@ export default function DriftWall({
               </div>
             </div>
           )
-        })}
+})}
       </div>
+      {preview && (
+        <div ref={previewRef} className="drift-wall__preview is-open" aria-hidden="true">
+          <img src={preview.image} alt="" draggable={false} decoding="async" loading="lazy" />
+          <span className="drift-wall__pcap">{preview.title ?? 'Photo'}</span>
+        </div>
+      )}
     </div>
   )
 }

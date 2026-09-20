@@ -3,25 +3,19 @@
   left: 50%;
   bottom: calc(24px + env(safe-area-inset-bottom, 0px));
   z-index: 92;
-  transform: translateX(-50%) translateY(14px);
-  opacity: 0;
-  visibility: hidden;
-  pointer-events: none;
-  transition:
-    opacity 0.45s ease,
-    transform 0.45s ease,
-    visibility 0s 0.45s;
+  transform: translateX(-50%);
+  animation: cb-next-in 0.55s cubic-bezier(0.22, 1, 0.36, 1) 0.25s both;
 }
 
-.cb-next-rail.is-visible {
-  transform: translateX(-50%) translateY(0);
-  opacity: 1;
-  visibility: visible;
-  pointer-events: auto;
-  transition:
-    opacity 0.45s ease,
-    transform 0.45s ease,
-    visibility 0s;
+@keyframes cb-next-in {
+  from {
+    opacity: 0;
+    transform: translateX(-50%) translateY(14px) scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0) scale(1);
+  }
 }
 
 .cb-next {
@@ -40,8 +34,10 @@
   -webkit-backdrop-filter: blur(6px);
   color: var(--gold-soft, #e9d39a);
   text-decoration: none;
+  cursor: pointer;
   -webkit-tap-highlight-color: transparent;
   touch-action: manipulation;
+  font: inherit;
 }
 
 .cb-next::after {
@@ -122,6 +118,9 @@ html[data-menu-open='1'] .cb-next-rail {
 @media (prefers-reduced-motion: reduce) {
   .cb-next-ring,
   .cb-next-arrow {
+    animation: none;
+  }
+  .cb-next-rail {
     animation: none;
   }
   .cb-next::after {

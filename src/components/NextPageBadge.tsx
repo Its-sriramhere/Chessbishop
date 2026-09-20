@@ -1,42 +1,58 @@
-import { useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
+import { useCallback } from 'react'
+import { useLocation, useNavigate } from 'react-router-dom'
 import './NextPageBadge.css'
 
-export default function NextPageBadge() {
-  const [atBottom, setAtBottom] = useState(false)
+const PAGE_ORDER = ['/home', '/about', '/gallery', '/career', '/contact']
 
-  useEffect(() => {
-    let ticking = false
-    const check = () => {
-      ticking = false
-      const el = document.documentElement
-      const nearBottom = el.scrollHeight - el.scrollTop - window.innerHeight < 260
-      setAtBottom(nearBottom)
+const PAGE_LABELS: Record<string, string> = {
+  '/home': 'Home',
+  '/about': 'About',
+  '/gallery': 'Gallery',
+  '/career': 'Career',
+  '/contact': 'Contact',
+}
+
+const prefersReducedMotion = () =>
+  typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches
+
+export default function NextPageBadge() {
+  const { pathname } = useLocation()
+  const navigate = useNavigate()
+
+  const currentIndex = PAGE_ORDER.indexOf(pathname)
+  const nextPage = PAGE_ORDER[(currentIndex + 1) % PAGE_ORDER.length]
+  const nextLabel = PAGE_LABELS[nextPage] ?? 'Contact'
+
+  const hasMultipleSections =
+    typeof document !== 'undefined' && document.querySelectorAll('#main section').length > 1
+
+  const goNext = useCallback(() => {
+    const headerHeight = document.querySelector('header')?.getBoundingClientRect().height ?? 0
+    const threshold = window.scrollY + headerHeight + 56
+    const sections = Array.from(document.querySelectorAll('#main section'))
+    const target = sections.find((s) => s.getBoundingClientRect().top + window.scrollY > threshold)
+
+    if (target) {
+      const top = target.getBoundingClientRect().top + window.scrollY
+      window.scrollTo({
+        top: top - headerHeight - 24,
+        behavior: prefersReducedMotion() ? 'auto' : 'smooth',
+      })
+      return
     }
-    const onScroll = () => {
-      if (ticking) return
-      ticking = true
-      requestAnimationFrame(check)
-    }
-    check()
-    window.addEventListener('scroll', onScroll, { passive: true })
-    window.addEventListener('resize', onScroll)
-    return () => {
-      window.removeEventListener('scroll', onScroll)
-      window.removeEventListener('resize', onScroll)
-    }
-  }, [])
+    navigate(nextPage)
+  }, [navigate, nextPage])
 
   return (
-    <div className={`cb-next-rail${atBottom ? ' is-visible' : ''}`} data-testid="next-rail">
-      <Link to="/about" className="cb-next" aria-label="Go to the next page: About" title="About">
+    <div className="cb-next-rail">
+      <button type="button" className="cb-next" aria-label={hasMultipleSections ? 'Go to the next section' : `Go to the next page: ${nextLabel}`} title={hasMultipleSections ? 'Next section' : `Next: ${nextLabel}`} onClick={goNext}>
         <svg viewBox="0 0 100 100" className="cb-next-ring" aria-hidden="true">
           <defs>
             <path id="cb-next-ring-path" d="M50,50 m-34,0 a34,34 0 1,1 68,0 a34,34 0 1,1 -68,0" fill="none" />
           </defs>
           <text className="cb-next-ring-text">
             <textPath href="#cb-next-ring-path" xlinkHref="#cb-next-ring-path">
-              NEXT · ABOUT · NEXT · ABOUT ·
+              NEXT · SECTION ·
             </textPath>
           </text>
         </svg>
@@ -50,7 +66,7 @@ export default function NextPageBadge() {
             strokeLinejoin="round"
           />
         </svg>
-      </Link>
+      </button>
     </div>
   )
 }

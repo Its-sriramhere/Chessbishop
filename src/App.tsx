@@ -49,8 +49,6 @@ function ScrollToTop() {
 }
 
 function Shell() {
-  const { pathname } = useLocation()
-
   return (
     <div style={{ position: 'relative', minHeight: '100svh', display: 'flex', flexDirection: 'column' }}>
       <a href="#main" className="skip-link">
@@ -60,7 +58,7 @@ function Shell() {
       <PostHeroAurora />
       <ChessCursor />
       <FloatingAssistant />
-      {pathname === '/home' && <NextPageBadge />}
+      <NextPageBadge />
       <Navbar />
       <main style={{ flex: 1 }} id="main">
         <PageTransition>
