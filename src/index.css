@@ -823,21 +823,27 @@
 }
 
 .cb-piece {
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
   user-select: none;
   line-height: 1;
-  color: rgba(216, 182, 106, 0.12);
-  text-shadow: 0 0 40px rgba(216, 182, 106, 0.2);
+  color: rgba(216, 182, 106, 0.16);
+  filter: drop-shadow(0 0 34px rgba(216, 182, 106, 0.22));
   will-change: transform;
 }
 
+.cb-piece svg {
+  display: block;
+  flex: none;
+}
+
 .cb-piece--ivory {
-  color: rgba(244, 240, 230, 0.08);
-  text-shadow: none;
+  color: rgba(244, 240, 230, 0.09);
+  filter: none;
 }
 
 .cb-piece--anchor {
-  color: rgba(216, 182, 106, 0.1);
+  color: rgba(216, 182, 106, 0.13);
 }
 
 @keyframes cb-float {

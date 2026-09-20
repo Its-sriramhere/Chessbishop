@@ -7,6 +7,7 @@ import PageTransition from './components/PageTransition'
 import ChessCursor from './effects/ChessCursor'
 import PostHeroAurora from './effects/PostHeroAurora'
 import FloatingAssistant from './components/FloatingAssistant'
+import NextPageBadge from './components/NextPageBadge'
 import Home from './pages/Home'
 import About from './pages/About'
 import Gallery from './pages/Gallery'
@@ -48,6 +49,8 @@ function ScrollToTop() {
 }
 
 function Shell() {
+  const { pathname } = useLocation()
+
   return (
     <div style={{ position: 'relative', minHeight: '100svh', display: 'flex', flexDirection: 'column' }}>
       <a href="#main" className="skip-link">
@@ -57,6 +60,7 @@ function Shell() {
       <PostHeroAurora />
       <ChessCursor />
       <FloatingAssistant />
+      {pathname === '/home' && <NextPageBadge />}
       <Navbar />
       <main style={{ flex: 1 }} id="main">
         <PageTransition>

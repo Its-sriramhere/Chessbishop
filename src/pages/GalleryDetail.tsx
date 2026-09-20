@@ -10,13 +10,61 @@ import { getGalleryBySlug, GALLERY_PLACEHOLDER } from '../data/site'
 const sectionStyle: CSSProperties = { position: 'relative', padding: 'clamp(90px, 14vw, 180px) clamp(20px, 6vw, 72px)' }
 const container: CSSProperties = { maxWidth: 1400, margin: '0 auto', position: 'relative', zIndex: 2 }
 
-function useResponsiveColumns() {
-  const [columns, setColumns] = useState(5)
+type DriftConfig = {
+  columns: number
+  tileWidth: number
+  tileHeight: number
+  gap: number
+  height: string
+  tilt: number
+  turn: number
+  fade: number
+}
+
+const DEFAULT_DRIFT: DriftConfig = {
+  columns: 5,
+  tileWidth: 220,
+  tileHeight: 150,
+  gap: 18,
+  height: 'clamp(420px, 52vw, 640px)',
+  tilt: 14,
+  turn: -12,
+  fade: 0.72,
+}
+
+function useDriftConfig() {
+  const [config, setConfig] = useState<DriftConfig>(DEFAULT_DRIFT)
 
   useEffect(() => {
     const small = window.matchMedia('(max-width: 640px)')
     const medium = window.matchMedia('(max-width: 1024px)')
-    const update = () => setColumns(small.matches ? 3 : medium.matches ? 4 : 5)
+    const update = () => {
+      if (small.matches) {
+        setConfig({
+          columns: 4,
+          tileWidth: 150,
+          tileHeight: 100,
+          gap: 14,
+          height: 'clamp(560px, 150vw, 660px)',
+          tilt: 8,
+          turn: -5,
+          fade: 0.58,
+        })
+      } else if (medium.matches) {
+        setConfig({
+          columns: 4,
+          tileWidth: 200,
+          tileHeight: 135,
+          gap: 18,
+          height: 'clamp(520px, 64vw, 680px)',
+          tilt: 11,
+          turn: -9,
+          fade: 0.66,
+        })
+      } else {
+        setConfig(DEFAULT_DRIFT)
+      }
+    }
     update()
     small.addEventListener('change', update)
     medium.addEventListener('change', update)
@@ -26,7 +74,7 @@ function useResponsiveColumns() {
     }
   }, [])
 
-  return columns
+  return config
 }
 
 function ComingSoon({ title }: { title: string }) {
@@ -67,7 +115,7 @@ function ComingSoon({ title }: { title: string }) {
 export default function GalleryDetail() {
   const { slug = '' } = useParams()
   const item = getGalleryBySlug(slug)
-  const columns = useResponsiveColumns()
+  const drift = useDriftConfig()
   const [lightIdx, setLightIdx] = useState<number | null>(null)
   const dialogRef = useRef<HTMLDivElement | null>(null)
   const touchX = useRef<number | null>(null)
@@ -140,16 +188,16 @@ export default function GalleryDetail() {
 
           {hasImages && item.viewer === 'drift' && (
             <AnimatedContent from={{ y: 24 }}>
-              <div style={{ position: 'relative', height: 'clamp(420px, 52vw, 640px)', borderRadius: 24, overflow: 'hidden', border: '1px solid var(--border)' }}>
+              <div style={{ position: 'relative', height: drift.height, borderRadius: 24, overflow: 'hidden', border: '1px solid var(--border)' }}>
                 <DriftWall
                   items={driftItems}
-                  columns={columns}
-                  tileWidth={220}
-                  tileHeight={150}
-                  gap={18}
+                  columns={drift.columns}
+                  tileWidth={drift.tileWidth}
+                  tileHeight={drift.tileHeight}
+                  gap={drift.gap}
                   radius={14}
-                  tilt={14}
-                  turn={-12}
+                  tilt={drift.tilt}
+                  turn={drift.turn}
                   roll={0}
                   perspective={1200}
                   depth={120}
@@ -159,7 +207,7 @@ export default function GalleryDetail() {
                   parallax={0.6}
                   pauseOnHover={false}
                   lift={70}
-                  fade={0.72}
+                  fade={drift.fade}
                   dim={0.78}
                   grayscale={false}
                   overlayColor="#050605"

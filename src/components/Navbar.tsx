@@ -35,7 +35,23 @@ export default function Navbar() {
     setOpen(false)
   }, [pathname])
 
+  useEffect(() => {
+    if (!open) return
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') setOpen(false)
+    }
+    window.addEventListener('keydown', onKey)
+    return () => window.removeEventListener('keydown', onKey)
+  }, [open])
+
   const solid = scrolled || open
+
+  const panelTransition = open
+    ? 'transform 0.55s cubic-bezier(0.76, 0, 0.24, 1), visibility 0s'
+    : 'transform 0.55s cubic-bezier(0.76, 0, 0.24, 1), visibility 0s 0.55s'
+  const scrimTransition = open
+    ? 'opacity 0.4s ease, visibility 0s'
+    : 'opacity 0.4s ease, visibility 0s 0.4s'
 
   return (
     <>
@@ -46,6 +62,8 @@ export default function Navbar() {
           left: 0,
           right: 0,
           zIndex: 90,
+          display: 'flex',
+          alignItems: 'center',
           paddingTop: 'env(safe-area-inset-top, 0px)',
           backdropFilter: solid ? 'blur(18px) saturate(140%)' : 'none',
           WebkitBackdropFilter: solid ? 'blur(18px) saturate(140%)' : 'none',
@@ -57,6 +75,7 @@ export default function Navbar() {
         <nav
           aria-label="Primary"
           style={{
+            width: '100%',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'space-between',
@@ -111,6 +130,7 @@ export default function Navbar() {
               className="cb-nav-burger"
               aria-label={open ? 'Close menu' : 'Open menu'}
               aria-expanded={open}
+              aria-controls="cb-nav-drawer"
               onClick={() => setOpen((v) => !v)}
             >
               <span style={{ transform: open ? 'translateY(0) rotate(45deg)' : 'translateY(-4px)' }} />
@@ -122,25 +142,54 @@ export default function Navbar() {
       </header>
 
       <div
-        aria-hidden={!open}
+        id="cb-nav-scrim"
+        aria-hidden="true"
+        onClick={() => setOpen(false)}
         style={{
           position: 'fixed',
           inset: 0,
+          zIndex: 84,
+          background: 'rgba(5, 6, 5, 0.6)',
+          backdropFilter: open ? 'blur(5px)' : 'none',
+          WebkitBackdropFilter: open ? 'blur(5px)' : 'none',
+          opacity: open ? 1 : 0,
+          visibility: open ? 'visible' : 'hidden',
+          transition: scrimTransition,
+          cursor: 'pointer',
+        }}
+      />
+
+      <div
+        id="cb-nav-drawer"
+        role="dialog"
+        aria-modal="true"
+        aria-label="Site navigation"
+        aria-hidden={!open}
+        style={{
+          position: 'fixed',
+          top: 0,
+          right: 0,
+          bottom: 0,
+          width: 'min(84vw, 380px)',
           zIndex: 85,
-          background: 'rgba(5, 6, 5, 0.97)',
-          backdropFilter: 'blur(20px)',
-          WebkitBackdropFilter: 'blur(20px)',
+          background:
+            'radial-gradient(140% 90% at 100% 0%, rgba(216, 182, 106, 0.08), transparent 55%), linear-gradient(180deg, #0a0d0b 0%, #050605 100%)',
+          borderLeft: '1px solid rgba(216, 182, 106, 0.22)',
+          boxShadow: '-28px 0 70px rgba(0, 0, 0, 0.55)',
+          paddingTop: 'calc(clamp(96px, 13vh, 120px) + env(safe-area-inset-top, 0px))',
+          paddingBottom: 'calc(clamp(34px, 5vh, 48px) + env(safe-area-inset-bottom, 0px))',
+          paddingInline: 'clamp(24px, 7vw, 38px)',
+          overflowY: 'auto',
+          overscrollBehavior: 'contain',
+          WebkitOverflowScrolling: 'touch',
           display: 'flex',
           flexDirection: 'column',
-          justifyContent: 'center',
-          padding: 'clamp(90px, 16vh, 140px) 8vw',
-          overscrollBehavior: 'contain',
-          overflowY: 'auto',
-          transform: open ? 'translateY(0)' : 'translateY(-100%)',
-          transition: 'transform 0.55s cubic-bezier(0.76, 0, 0.24, 1)',
+          transform: open ? 'translateX(0)' : 'translateX(100%)',
+          transition: panelTransition,
           visibility: open ? 'visible' : 'hidden',
         }}
       >
+        <span className="cb-nav-drawer-eyebrow">MENU</span>
         <ul style={{ listStyle: 'none', margin: 0, padding: 0 }}>
           {[...NAV_LINKS, { label: 'JOIN →', path: '/contact', cta: true }].map((l, i) => (
             <li key={l.path} style={{ overflow: 'hidden' }}>
@@ -149,8 +198,8 @@ export default function Navbar() {
                 className={l.cta ? 'cb-nav-mobile-cta' : 'cb-nav-mobile-link'}
                 style={{
                   opacity: open ? 1 : 0,
-                  transform: open ? 'translateY(0)' : 'translateY(60%)',
-                  transition: `opacity 0.5s ease ${open ? 120 + i * 70 : 0}ms, transform 0.6s cubic-bezier(0.22,1,0.36,1) ${open ? 120 + i * 70 : 0}ms`,
+                  transform: open ? 'translateX(0)' : 'translateX(40%)',
+                  transition: `opacity 0.5s ease ${open ? 120 + i * 60 : 0}ms, transform 0.6s cubic-bezier(0.22,1,0.36,1) ${open ? 120 + i * 60 : 0}ms`,
                 }}
               >
                 {l.label}
@@ -158,6 +207,12 @@ export default function Navbar() {
             </li>
           ))}
         </ul>
+        <div className="cb-nav-drawer-foot">
+          <a href="mailto:teamchessbishop@gmail.com">teamchessbishop@gmail.com</a>
+          <a href="https://wa.me/917598111855" target="_blank" rel="noopener noreferrer">
+            +91 75981 11855
+          </a>
+        </div>
       </div>
     </>
   )
