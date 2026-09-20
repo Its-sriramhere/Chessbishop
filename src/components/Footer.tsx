@@ -1,11 +1,11 @@
 import { Link } from 'react-router-dom'
-import { Camera, Play, AtSign, Briefcase } from 'lucide-react'
+import { InstagramIcon, XIcon, YoutubeIcon, LinkedinIcon } from './icons/BrandIcons'
 
 const socials = [
-  { label: 'Instagram', href: 'https://www.instagram.com/chessbishopofficial/', Icon: Camera },
-  { label: 'YouTube', href: 'https://youtube.com', Icon: Play },
-  { label: 'X', href: 'https://x.com', Icon: AtSign },
-  { label: 'LinkedIn', href: 'https://linkedin.com', Icon: Briefcase },
+  { label: 'Instagram', href: 'https://www.instagram.com/chessbishopofficial/', Icon: InstagramIcon },
+  { label: 'YouTube', href: 'https://youtube.com', Icon: YoutubeIcon },
+  { label: 'X', href: 'https://x.com', Icon: XIcon },
+  { label: 'LinkedIn', href: 'https://linkedin.com', Icon: LinkedinIcon },
 ]
 
 const quickLinks = [
@@ -50,25 +50,24 @@ export default function Footer() {
                 rel="noreferrer"
                 aria-label={`Chessbishop on ${label}`}
                 style={{
-                  color: 'var(--muted)',
                   width: 44,
                   height: 44,
                   display: 'inline-grid',
                   placeItems: 'center',
                   borderRadius: 12,
                   border: '1px solid var(--border)',
-                  transition: 'color 0.25s, border-color 0.25s',
+                  transition: 'border-color 0.25s, transform 0.25s',
                 }}
                 onMouseEnter={(e) => {
-                  e.currentTarget.style.color = 'var(--gold)'
                   e.currentTarget.style.borderColor = 'var(--border-gold)'
+                  e.currentTarget.style.transform = 'translateY(-2px)'
                 }}
                 onMouseLeave={(e) => {
-                  e.currentTarget.style.color = ''
                   e.currentTarget.style.borderColor = ''
+                  e.currentTarget.style.transform = ''
                 }}
               >
-                <Icon size={18} strokeWidth={1.8} aria-hidden="true" />
+                <Icon size={18} />
               </a>
             ))}
           </div>

@@ -12,6 +12,7 @@ import {
   type ReactNode,
 } from 'react'
 import { Link, useLocation } from 'react-router-dom'
+import { InstagramIcon, WhatsappIcon, MailIcon } from './icons/BrandIcons'
 import './FloatingAssistant.css'
 
 type Side = 'left' | 'right'
@@ -36,31 +37,9 @@ const EMAIL_URL = `mailto:teamchessbishop@gmail.com?subject=${encodeURIComponent
   'Enquiry from the Chessbishop website',
 )}&body=${encodeURIComponent('Hi Chessbishop team,\n\nI’d like to know more about ')}`
 
-const WhatsAppIcon = (
-  <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-    <path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38a9.9 9.9 0 0 0 4.79 1.22h.01c5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0 0 12.04 2Zm0 1.8c2.16 0 4.19.84 5.72 2.37a8.06 8.06 0 0 1 2.37 5.73c0 4.47-3.63 8.1-8.1 8.1a8.1 8.1 0 0 1-4.12-1.13l-.3-.18-3.12.82.83-3.04-.19-.31a8.05 8.05 0 0 1-1.24-4.3c0-4.47 3.63-8.1 8.1-8.1Z" />
-    <path d="M9.35 7.4c-.2 0-.52.07-.79.37-.27.3-1.04 1.02-1.04 2.48s1.07 2.88 1.22 3.08c.15.2 2.07 3.16 5.01 4.43.7.3 1.25.48 1.68.62.7.22 1.34.19 1.85.12.56-.08 1.74-.71 1.98-1.4.25-.69.25-1.28.18-1.4-.07-.12-.27-.19-.57-.34-.3-.15-1.74-.86-2.01-.95-.27-.1-.46-.15-.66.15-.2.3-.78.95-.95 1.14-.17.19-.35.22-.65.07-.3-.15-1.26-.47-2.4-1.48-.89-.79-1.48-1.77-1.65-2.07-.17-.3-.02-.46.13-.6.14-.14.3-.35.45-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.02-.52-.07-.15-.66-1.6-.9-2.18-.24-.57-.49-.49-.66-.5h-.56Z" />
-  </svg>
-)
-
-const MailIcon = (
-  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-    <rect x="2.5" y="4.5" width="19" height="15" rx="2.6" />
-    <path d="m3.6 6.6 8.4 5.9 8.4-5.9" />
-  </svg>
-)
-
 const PhoneIcon = (
   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
     <path d="M6.4 3.6 8.9 3l1.7 3.8-1.6 1.4a12.4 12.4 0 0 0 5.3 5.3l1.4-1.6L19.5 13l-.6 2.5a2 2 0 0 1-2.3 1.6A15.8 15.8 0 0 1 3.4 6.5 2 2 0 0 1 5 4.2Z" />
-  </svg>
-)
-
-const InstagramIcon = (
-  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-    <rect x="3" y="3" width="18" height="18" rx="5" />
-    <circle cx="12" cy="12" r="4" />
-    <circle cx="17.2" cy="6.8" r="0.9" fill="currentColor" stroke="none" />
   </svg>
 )
 
@@ -82,10 +61,10 @@ const CoachIcon = (
 type Item = { key: string; label: string; icon: ReactNode; href?: string; to?: string; newTab?: boolean; accent?: boolean }
 
 const ITEMS: Item[] = [
-  { key: 'whatsapp', label: 'WhatsApp chat', icon: WhatsAppIcon, href: WHATSAPP_URL, newTab: true },
-  { key: 'email', label: 'Email us', icon: MailIcon, href: EMAIL_URL },
+  { key: 'whatsapp', label: 'WhatsApp chat', icon: <WhatsappIcon />, href: WHATSAPP_URL, newTab: true },
+  { key: 'email', label: 'Email us', icon: <MailIcon />, href: EMAIL_URL },
   { key: 'call', label: 'Call +91 98948 94730', icon: PhoneIcon, href: 'tel:+919489494730' },
-  { key: 'instagram', label: 'Instagram', icon: InstagramIcon, href: 'https://www.instagram.com/chessbishopofficial/', newTab: true },
+  { key: 'instagram', label: 'Instagram', icon: <InstagramIcon />, href: 'https://www.instagram.com/chessbishopofficial/', newTab: true },
   { key: 'contact', label: 'Contact form', icon: ContactIcon, to: '/contact' },
   { key: 'coach', label: 'Apply as a Chess Coach', icon: CoachIcon, to: '/career/apply', accent: true },
 ]
