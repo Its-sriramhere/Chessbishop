@@ -88,8 +88,8 @@ export default function Footer() {
           <a href="mailto:teamchessbishop@gmail.com" style={{ color: 'var(--muted)', fontSize: 14, textDecoration: 'none' }} onMouseEnter={(e) => (e.currentTarget.style.color = 'var(--gold)')} onMouseLeave={(e) => (e.currentTarget.style.color = '')}>
             teamchessbishop@gmail.com
           </a>
-          <a href="https://wa.me/917598111855" target="_blank" rel="noopener noreferrer" style={{ color: 'var(--muted)', fontSize: 14, textDecoration: 'none' }} onMouseEnter={(e) => (e.currentTarget.style.color = 'var(--gold)')} onMouseLeave={(e) => (e.currentTarget.style.color = '')}>
-            +91 75981 11855
+          <a href="https://wa.me/919489494730" target="_blank" rel="noopener noreferrer" style={{ color: 'var(--muted)', fontSize: 14, textDecoration: 'none' }} onMouseEnter={(e) => (e.currentTarget.style.color = 'var(--gold)')} onMouseLeave={(e) => (e.currentTarget.style.color = '')}>
+            +91 98948 94730
           </a>
           <span style={{ color: 'var(--muted)', fontSize: 14, lineHeight: 1.6 }}>
             31/13 Second Street, MC Road,

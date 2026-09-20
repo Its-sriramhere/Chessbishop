@@ -29,7 +29,7 @@ const SPREAD = 160
 const DRAG_THRESHOLD = 8
 const NUDGE = 16
 
-const WHATSAPP_URL = `https://wa.me/917598111855?text=${encodeURIComponent(
+const WHATSAPP_URL = `https://wa.me/919489494730?text=${encodeURIComponent(
   'Hi Chessbishop! I’d like to know more about your chess programs.',
 )}`
 const EMAIL_URL = `mailto:teamchessbishop@gmail.com?subject=${encodeURIComponent(
@@ -84,7 +84,7 @@ type Item = { key: string; label: string; icon: ReactNode; href?: string; to?: s
 const ITEMS: Item[] = [
   { key: 'whatsapp', label: 'WhatsApp chat', icon: WhatsAppIcon, href: WHATSAPP_URL, newTab: true },
   { key: 'email', label: 'Email us', icon: MailIcon, href: EMAIL_URL },
-  { key: 'call', label: 'Call +91 75981 11855', icon: PhoneIcon, href: 'tel:+917598111855' },
+  { key: 'call', label: 'Call +91 98948 94730', icon: PhoneIcon, href: 'tel:+919489494730' },
   { key: 'instagram', label: 'Instagram', icon: InstagramIcon, href: 'https://www.instagram.com/chessbishopofficial/', newTab: true },
   { key: 'contact', label: 'Contact form', icon: ContactIcon, to: '/contact' },
   { key: 'coach', label: 'Apply as a Chess Coach', icon: CoachIcon, to: '/career/apply', accent: true },

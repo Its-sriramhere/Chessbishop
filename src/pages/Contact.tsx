@@ -10,9 +10,9 @@ const sectionStyle: React.CSSProperties = { position: 'relative', padding: 'clam
 const container: React.CSSProperties = { maxWidth: 1160, margin: '0 auto', position: 'relative', zIndex: 2 }
 
 const COMPANY_EMAIL = 'teamchessbishop@gmail.com'
-const COMPANY_PHONE = '+91 75981 11855'
-const WHATSAPP_URL = 'https://wa.me/917598111855'
+const COMPANY_PHONE = '+91 98948 94730'
 
+const WHATSAPP_URL = 'https://wa.me/919489494730'
 const ADDRESS_LINES = [
   '31/13 Second Street, Srinivasa Nagar,',
   'Co-operative Colony Road, MC Road,',

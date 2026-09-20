@@ -209,8 +209,8 @@ export default function Navbar() {
         </ul>
         <div className="cb-nav-drawer-foot">
           <a href="mailto:teamchessbishop@gmail.com">teamchessbishop@gmail.com</a>
-          <a href="https://wa.me/917598111855" target="_blank" rel="noopener noreferrer">
-            +91 75981 11855
+          <a href="https://wa.me/919489494730" target="_blank" rel="noopener noreferrer">
+            +91 98948 94730
           </a>
         </div>
       </div>

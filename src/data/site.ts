@@ -19,11 +19,6 @@ export const dhoniTrophyImages = Array.from(
 
 const pad2 = (n: number) => String(n).padStart(2, '0')
 
-export const studentsAchievementsImages = Array.from(
-  { length: 26 },
-  (_, i) => `/gallery/students-achievements-and-events/students-${pad2(i + 1)}.jpg`,
-)
-
 export const diceChessImages = Array.from(
   { length: 4 },
   (_, i) => `/gallery/dice-chess-diploma-tournament-riga-latvia/dice-${pad2(i + 1)}.jpg`,
@@ -55,8 +50,8 @@ export const galleryItems: GalleryItem[] = [
     slug: 'students-achievements-and-events',
     title: 'Student’s Achievements and Events',
     category: 'COMMUNITY',
-    cover: studentsAchievementsImages[0],
-    images: studentsAchievementsImages,
+    cover: GALLERY_PLACEHOLDER,
+    images: [],
     viewer: 'accordion',
     tall: true,
   },
