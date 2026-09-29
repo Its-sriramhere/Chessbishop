@@ -36,7 +36,7 @@ export const rootsImages = Array.from(
 )
 
 export const tambaramImages = Array.from(
-  { length: 147 },
+  { length: 60 },
   (_, i) => `/gallery/tambaram-corporation-inauguration/tambaram-${String(i + 1).padStart(3, '0')}.jpg`,
 )
 
