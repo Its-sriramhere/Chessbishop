@@ -1124,6 +1124,73 @@
   }
 }
 
+/* crew section */
+.cb-crew-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+}
+
+.cb-crew-card {
+  border: 1px solid var(--border);
+  border-radius: 24px;
+  background: rgba(244, 240, 230, 0.03);
+  padding: 18px;
+  text-align: left;
+}
+
+.cb-crew-photo {
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+  border-radius: 16px;
+  border: 1px solid var(--border-gold);
+  display: block;
+}
+
+.cb-crew-monogram {
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  border-radius: 16px;
+  border: 1px solid var(--border-gold);
+  background: rgba(216, 182, 106, 0.08);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(44px, 6vw, 72px);
+  color: var(--gold);
+  letter-spacing: 0.06em;
+}
+
+.cb-crew-name {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 19px;
+  color: var(--ivory);
+  margin-top: 18px;
+}
+
+.cb-crew-role {
+  color: var(--gold);
+  font-size: 13px;
+  line-height: 1.5;
+  margin-top: 6px;
+}
+
+@media (max-width: 1024px) {
+  .cb-crew-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 560px) {
+  .cb-crew-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
 /* Coach application form */
 .cb-apply-layout {
   display: grid;

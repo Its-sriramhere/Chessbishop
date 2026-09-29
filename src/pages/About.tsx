@@ -6,6 +6,13 @@ import SectionBackground from '../components/SectionBackground'
 const sectionStyle: React.CSSProperties = { position: 'relative', padding: 'clamp(90px, 14vw, 180px) clamp(20px, 6vw, 72px)' }
 const container: React.CSSProperties = { maxWidth: 1240, margin: '0 auto', position: 'relative', zIndex: 2 }
 
+const crewMembers: { name: string; role: string; photo?: string; initials?: string }[] = [
+  { name: 'Vimal R', role: 'Chief Operating Officer (COO)', photo: '/people/vimal.jpg' },
+  { name: 'Sriram V', role: 'AI Technician & Developer', photo: '/people/sriram.jpg' },
+  { name: 'Praneet S', role: 'AI Technician & Developer', photo: '/people/praneet.jpg' },
+  { name: 'Anand N', role: 'AI Technician & Developer', initials: 'AN' },
+]
+
 export default function About() {
   return (
     <>
@@ -203,6 +210,31 @@ export default function About() {
               </div>
             </div>
           </AnimatedContent>
+        </div>
+      </section>
+
+      {/* About — crew */}
+      <section style={{ ...sectionStyle, paddingTop: 0 }}>
+        <SectionBackground />
+        <div style={{ ...container, textAlign: 'center' }}>
+          <AnimatedContent from={{ y: 14 }}>
+            <span className="eyebrow">Our Team</span>
+            <h2 className="section-title" style={{ marginTop: 16 }}>THE CREW</h2>
+          </AnimatedContent>
+
+          <div className="cb-crew-grid" style={{ marginTop: 60 }}>
+            {crewMembers.map((m, i) => (
+              <AnimatedContent key={m.name} delay={0.08 + i * 0.06} from={{ y: 26 }} className="cb-crew-card">
+                {m.photo ? (
+                  <img src={m.photo} alt={`${m.name} — ${m.role}`} width={400} height={500} loading="lazy" decoding="async" className="cb-crew-photo" />
+                ) : (
+                  <div className="cb-crew-monogram" aria-hidden="true">{m.initials}</div>
+                )}
+                <div className="cb-crew-name">{m.name}</div>
+                <div className="cb-crew-role">{m.role}</div>
+              </AnimatedContent>
+            ))}
+          </div>
         </div>
       </section>
     </>
