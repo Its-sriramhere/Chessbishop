@@ -36,8 +36,13 @@ export const rootsImages = Array.from(
 )
 
 export const tambaramImages = Array.from(
-  { length: 60 },
+  { length: 83 },
   (_, i) => `/gallery/tambaram-corporation-inauguration/tambaram-${String(i + 1).padStart(3, '0')}.jpg`,
+)
+
+export const tirupurImages = Array.from(
+  { length: 10 },
+  (_, i) => `/gallery/tirupur-corporation-inauguration/tirupur-${String(i + 1).padStart(3, '0')}.jpg`,
 )
 
 export const galleryCategories = ['ALL', 'TRAINING', 'TOURNAMENTS', 'EVENTS', 'COMMUNITY'] as const
@@ -97,8 +102,8 @@ export const galleryItems: GalleryItem[] = [
     slug: 'tirupur-corporation-inauguration',
     title: 'Tirupur Corporation Inauguration',
     category: 'EVENTS',
-    cover: GALLERY_PLACEHOLDER,
-    images: [],
+    cover: tirupurImages[0],
+    images: tirupurImages,
     viewer: 'grid',
   },
   {
