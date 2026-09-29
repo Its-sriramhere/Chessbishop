@@ -35,6 +35,11 @@ export const rootsImages = Array.from(
   (_, i) => `/gallery/roots-of-chessbishop/roots-${pad2(i + 1)}.jpg`,
 )
 
+export const tambaramImages = Array.from(
+  { length: 147 },
+  (_, i) => `/gallery/tambaram-corporation-inauguration/tambaram-${String(i + 1).padStart(3, '0')}.jpg`,
+)
+
 export const galleryCategories = ['ALL', 'TRAINING', 'TOURNAMENTS', 'EVENTS', 'COMMUNITY'] as const
 
 export const galleryItems: GalleryItem[] = [
@@ -84,8 +89,8 @@ export const galleryItems: GalleryItem[] = [
     slug: 'tambaram-corporation-inauguration',
     title: 'Tambaram Corporation Inauguration',
     category: 'EVENTS',
-    cover: GALLERY_PLACEHOLDER,
-    images: [],
+    cover: tambaramImages[0],
+    images: tambaramImages,
     viewer: 'grid',
   },
   {
