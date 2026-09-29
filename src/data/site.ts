@@ -45,6 +45,11 @@ export const tirupurImages = Array.from(
   (_, i) => `/gallery/tirupur-corporation-inauguration/tirupur-${String(i + 1).padStart(3, '0')}.jpg`,
 )
 
+export const nagapattinamImages = Array.from(
+  { length: 92 },
+  (_, i) => `/gallery/journey-first-step-nagapattinam/nagapattinam-${String(i + 1).padStart(3, '0')}.jpg`,
+)
+
 export const galleryCategories = ['ALL', 'TRAINING', 'TOURNAMENTS', 'EVENTS', 'COMMUNITY'] as const
 
 export const galleryItems: GalleryItem[] = [
@@ -110,8 +115,8 @@ export const galleryItems: GalleryItem[] = [
     slug: 'journey-first-step-nagapattinam',
     title: 'Journey of the First Step to Nagapattinam',
     category: 'EVENTS',
-    cover: GALLERY_PLACEHOLDER,
-    images: [],
+    cover: nagapattinamImages[0],
+    images: nagapattinamImages,
     viewer: 'grid',
   },
 ]
