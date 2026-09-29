@@ -1,10 +1,4 @@
-import {
-  useEffect,
-  useMemo,
-  useRef,
-  type CSSProperties,
-  type PointerEvent as ReactPointerEvent,
-} from 'react'
+import { useEffect, useMemo, useRef } from 'react'
 import './InfiniteSpiral.css'
 
 const clamp = (value: number, min: number, max: number) => Math.min(Math.max(value, min), max)
@@ -14,22 +8,24 @@ const smoothstep = (min: number, max: number, value: number) => {
   return x * x * (3 - 2 * x)
 }
 
-export interface InfiniteSpiralItem {
+export type InfiniteSpiralItem = {
   src: string
   alt?: string
-  id?: string
-  href?: string
-  target?: string
   label?: string
+  href?: string
+  id?: string
+  target?: string
 }
 
-export type InfiniteSpiralMode = 'auto' | 'scroll' | 'drag' | 'all'
+type AnimationMode = 'auto' | 'scroll' | 'drag' | 'all'
+type Direction = 'up' | 'down'
+type ImageFit = 'cover' | 'contain' | 'fill'
 
-export interface InfiniteSpiralProps {
-  items?: Array<string | InfiniteSpiralItem>
+type InfiniteSpiralProps = {
+  items?: InfiniteSpiralItem[]
   speed?: number
-  direction?: 'up' | 'down'
-  animationMode?: InfiniteSpiralMode
+  direction?: Direction
+  animationMode?: AnimationMode
   radius?: number
   cardWidth?: number
   cardHeight?: number
@@ -43,14 +39,12 @@ export interface InfiniteSpiralProps {
   edgeFade?: number
   edgeBlur?: number
   pauseOnHover?: boolean
-  imageFit?: CSSProperties['objectFit']
+  imageFit?: ImageFit
   grayscale?: number
   className?: string
 }
 
-type NormalizedItem = { src: string; alt?: string; id?: string; href?: string; target?: string; label?: string }
-
-export default function InfiniteSpiral({
+const InfiniteSpiral = ({
   items = [],
   speed = 0.55,
   direction = 'up',
@@ -71,9 +65,9 @@ export default function InfiniteSpiral({
   imageFit = 'cover',
   grayscale = 0,
   className = '',
-}: InfiniteSpiralProps) {
-  const rootRef = useRef<HTMLDivElement | null>(null)
-  const cardRefs = useRef<Array<HTMLElement | null>>([])
+}: InfiniteSpiralProps) => {
+  const rootRef = useRef<HTMLDivElement>(null)
+  const cardRefs = useRef<(HTMLElement | null)[]>([])
   const progressRef = useRef(0)
   const targetProgressRef = useRef(0)
   const autoSpeedRef = useRef(0)
@@ -83,7 +77,7 @@ export default function InfiniteSpiral({
   const lastPointerYRef = useRef(0)
   const dragMovedRef = useRef(false)
 
-  const normalizedItems = useMemo<NormalizedItem[]>(
+  const normalizedItems = useMemo(
     () =>
       items.map((item, index) =>
         typeof item === 'string'
@@ -97,7 +91,7 @@ export default function InfiniteSpiral({
     const root = rootRef.current
     if (!root || normalizedItems.length === 0) return
 
-    let frameId = 0
+    let frameId: number
     let previousTime = performance.now()
     let bounds = root.getBoundingClientRect()
     const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)')
@@ -212,19 +206,19 @@ export default function InfiniteSpiral({
     pauseOnHover,
   ])
 
-  const dragEnabled = animationMode === 'drag' || animationMode === 'all'
-
   const rootStyle = {
     perspective: `${perspective}px`,
     '--infinite-spiral-card-width': `${cardWidth}px`,
     '--infinite-spiral-card-height': `${cardHeight}px`,
     '--infinite-spiral-card-radius': `${cardRadius}px`,
-    cursor: dragEnabled ? 'grab' : 'default',
-    touchAction: dragEnabled ? 'pan-x' : 'auto',
-    userSelect: dragEnabled ? 'none' : 'auto',
-  } as CSSProperties
+    cursor: animationMode === 'drag' || animationMode === 'all' ? 'grab' : 'default',
+    touchAction: animationMode === 'drag' || animationMode === 'all' ? 'pan-x' : 'auto',
+    userSelect: animationMode === 'drag' || animationMode === 'all' ? 'none' : 'auto',
+  } as React.CSSProperties
 
-  const stopDragging = (event: ReactPointerEvent<HTMLDivElement>) => {
+  const dragEnabled = animationMode === 'drag' || animationMode === 'all'
+
+  const stopDragging = (event: React.PointerEvent<HTMLDivElement>) => {
     if (!draggingRef.current) return
     draggingRef.current = false
     if (event.currentTarget.hasPointerCapture(event.pointerId)) {
@@ -271,67 +265,42 @@ export default function InfiniteSpiral({
     >
       <div className="infinite-spiral__stage" role="list" aria-label="Infinite spiral gallery">
         {normalizedItems.map((item, index) => {
-          const cardStyle: CSSProperties = {
-            width: cardWidth,
-            height: cardHeight,
-            borderRadius: cardRadius,
-          }
-          const imageStyle: CSSProperties = {
-            width: cardWidth,
-            height: cardHeight,
-            maxWidth: 'none',
-            maxHeight: 'none',
-            objectFit: imageFit,
-            filter: `grayscale(${Math.min(1, Math.max(0, grayscale))})`,
-          }
-          const image = (
-            <img
-              className="infinite-spiral__image"
-              src={item.src}
-              alt={item.alt ?? ''}
-              loading={index < 6 ? 'eager' : 'lazy'}
-              decoding="async"
-              draggable={false}
-              style={imageStyle}
-            />
-          )
-
-          if (item.href) {
-            return (
-              <a
-                key={item.id ?? `${item.src}-${index}`}
-                ref={(node) => {
-                  cardRefs.current[index] = node
-                }}
-                className="infinite-spiral__item"
-                style={cardStyle}
-                href={item.href}
-                target={item.target}
-                rel={item.target === '_blank' ? 'noreferrer noopener' : undefined}
-                role="listitem"
-                aria-label={item.label ?? item.alt}
-              >
-                {image}
-              </a>
-            )
-          }
-
+          const Card = item.href ? 'a' : 'div'
           return (
-            <div
+            <Card
               key={item.id ?? `${item.src}-${index}`}
-              ref={(node) => {
+              ref={(node: HTMLElement | null) => {
                 cardRefs.current[index] = node
               }}
               className="infinite-spiral__item"
-              style={cardStyle}
+              style={{ width: cardWidth, height: cardHeight, borderRadius: cardRadius }}
+              href={item.href}
+              target={item.target}
+              rel={item.target === '_blank' ? 'noreferrer' : undefined}
               role="listitem"
               aria-label={item.label ?? item.alt}
             >
-              {image}
-            </div>
+              <img
+                className="infinite-spiral__image"
+                src={item.src}
+                alt={item.alt}
+                loading={index < 6 ? 'eager' : 'lazy'}
+                draggable={false}
+                style={{
+                  width: cardWidth,
+                  height: cardHeight,
+                  maxWidth: 'none',
+                  maxHeight: 'none',
+                  objectFit: imageFit,
+                  filter: `grayscale(${Math.min(1, Math.max(0, grayscale))})`,
+                }}
+              />
+            </Card>
           )
         })}
       </div>
     </div>
   )
 }
+
+export default InfiniteSpiral

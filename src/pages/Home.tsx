@@ -9,6 +9,7 @@ import SpotlightCard from '../effects/SpotlightCard'
 import ScrollStack from '../effects/ScrollStack'
 import ChessbishopReveal from '../effects/ChessbishopReveal'
 import SectionBackground from '../components/SectionBackground'
+import InfiniteSpiral from '../components/InfiniteSpiral'
 import { galleryItems, GALLERY_PLACEHOLDER, reviews } from '../data/site'
 
 const sectionStyle: React.CSSProperties = { position: 'relative', padding: 'clamp(90px, 14vw, 180px) clamp(20px, 6vw, 72px)' }
@@ -232,38 +233,26 @@ export default function Home() {
             </AnimatedContent>
           </div>
 
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(6, 1fr)', gridAutoRows: 'clamp(140px, 16vw, 220px)', gap: 14, marginTop: 48, gridAutoFlow: 'dense' }}>
-            {galleryItems.slice(0, 8).map((g, i) => (
-              <AnimatedContent
-                key={`${g.title}-${i}`}
-                delay={i * 0.06}
-                from={{ y: 24 }}
-                style={{ gridColumn: g.tall ? 'span 2' : 'span 1', gridRow: g.tall ? 'span 2' : 'span 1', minWidth: 0 }}
-              >
-                <Link
-                  to={`/gallery/${g.slug}`}
-                  className="cb-gallery-tile"
-                  aria-label={`${g.title}, ${g.category}`}
-                  style={{ position: 'relative', display: 'block', width: '100%', height: '100%', overflow: 'hidden', borderRadius: 18, border: '1px solid var(--border)', textDecoration: 'none', backgroundColor: '#0b0f0d' }}
-                >
-                  <div
-                    style={{
-                      position: 'absolute',
-                      inset: 0,
-                      background: g.images.length ? `url(${g.cover}) center / cover no-repeat` : `url(${GALLERY_PLACEHOLDER}) center / 52% no-repeat`,
-                      transform: 'scale(1.001)',
-                      filter: g.images.length ? 'brightness(0.72)' : 'brightness(0.9)',
-                    }}
-                  />
-                  <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(180deg, transparent 40%, rgba(5,6,5,0.85))', opacity: 0.9 }} />
-                  <div style={{ position: 'absolute', left: 14, bottom: 12, right: 14 }}>
-                    <div style={{ color: 'var(--gold)', fontSize: 10, letterSpacing: '0.3em', fontWeight: 700 }}>{g.category}</div>
-                    <div className="cb-clamp-2" style={{ fontFamily: 'var(--font-display)', fontSize: 'clamp(15px, 1.2vw, 19px)', marginTop: 4, lineHeight: 1.3 }}>{g.title}</div>
-                  </div>
-                </Link>
-              </AnimatedContent>
-            ))}
-          </div>
+          <AnimatedContent from={{ y: 24 }} delay={0.1} style={{ marginTop: 48, height: 'clamp(480px, 62vh, 660px)' }}>
+            <InfiniteSpiral
+              items={galleryItems.map((g) => ({
+                src: g.images.length ? g.cover : GALLERY_PLACEHOLDER,
+                alt: g.title,
+                label: `${g.title}, ${g.category}`,
+                href: `/gallery/${g.slug}`,
+              }))}
+              animationMode="auto"
+              pauseOnHover
+              cardWidth={210}
+              cardHeight={270}
+              cardRadius={18}
+              cardsPerTurn={7}
+              centerScale={1.2}
+              radius={190}
+              verticalSpacing={84}
+              speed={0.55}
+            />
+          </AnimatedContent>
         </div>
       </section>
 
