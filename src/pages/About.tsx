@@ -10,7 +10,7 @@ const crewMembers: { name: string; role: string; photo?: string; initials?: stri
   { name: 'Vimal R', role: 'Chief Operating Officer (COO)', photo: '/people/vimal.jpg' },
   { name: 'Sriram V', role: 'AI Technician & Developer', photo: '/people/sriram.jpg' },
   { name: 'Praneet S', role: 'AI Technician & Developer', photo: '/people/praneet.jpg' },
-  { name: 'Anand N', role: 'AI Technician & Developer', initials: 'AN' },
+  { name: 'Anand N', role: 'AI Technician & Developer', photo: '/people/anand.jpg' },
 ]
 
 export default function About() {
