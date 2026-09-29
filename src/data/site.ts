@@ -8,14 +8,15 @@ export type GalleryItem = {
   images: string[]
   viewer: GalleryViewer
   tall?: boolean
+  wide?: boolean
 }
 
 export const GALLERY_PLACEHOLDER = '/chessbishop-emblem-v2.png'
 
-export const dhoniTrophyImages = Array.from(
-  { length: 32 },
-  (_, i) => `/gallery/dhoni-trophy/dhoni-${String(i + 1).padStart(2, '0')}.jpg`,
-)
+export const dhoniTrophyImages = [
+  '/gallery/dhoni-trophy/dhoni-00.jpg',
+  ...Array.from({ length: 32 }, (_, i) => `/gallery/dhoni-trophy/dhoni-${String(i + 1).padStart(2, '0')}.jpg`),
+]
 
 const pad2 = (n: number) => String(n).padStart(2, '0')
 
@@ -44,7 +45,7 @@ export const galleryItems: GalleryItem[] = [
     cover: dhoniTrophyImages[0],
     images: dhoniTrophyImages,
     viewer: 'drift',
-    tall: true,
+    wide: true,
   },
   {
     slug: 'students-achievements-and-events',

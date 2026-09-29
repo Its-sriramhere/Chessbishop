@@ -20,8 +20,7 @@ const ADDRESS_LINES = [
   'Pincode: 613 007',
 ]
 
-const GOOGLE_MAPS_URL =
-  'https://www.google.com/maps/dir/?api=1&destination=31%2F13%20Second%20Street%20Srinivasa%20Nagar%20Co-operative%20Colony%20Road%20MC%20Road%20Thanjavur%20Tamil%20Nadu%20613007'
+const GOOGLE_MAPS_URL = 'https://maps.app.goo.gl/fpRzsae49Wi8yPn9A'
 
 const infoRows = [
   { label: 'EMAIL', value: COMPANY_EMAIL, href: `mailto:${COMPANY_EMAIL}` },

@@ -95,7 +95,7 @@ export default function Gallery() {
 
           <div className="gallery-masonry">
             {filtered.map((g, i) => (
-              <AnimatedContent key={`${filter}-${g.slug}`} delay={i * 0.04} from={{ y: 22 }} className="masonry-item">
+              <AnimatedContent key={`${filter}-${g.slug}`} delay={i * 0.04} from={{ y: 22 }} className={`masonry-item${g.wide ? ' masonry-item--wide' : ''}`}>
                 <Link
                   to={`/gallery/${g.slug}`}
                   aria-label={`Open ${g.title} gallery`}
@@ -110,7 +110,7 @@ export default function Gallery() {
                     position: 'relative',
                     cursor: 'pointer',
                     textAlign: 'left',
-                    aspectRatio: g.tall ? '3/4' : '4/3',
+                    aspectRatio: g.wide ? '16/9' : g.tall ? '3/4' : '4/3',
                     textDecoration: 'none',
                     backgroundColor: '#0b0f0d',
                   }}

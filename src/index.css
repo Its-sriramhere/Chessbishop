@@ -497,6 +497,11 @@
   margin-bottom: 14px;
 }
 
+.masonry-item--wide {
+  column-span: all;
+  -webkit-column-span: all;
+}
+
 /* floating-label form fields */
 .field {
   position: relative;
