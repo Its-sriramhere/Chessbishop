@@ -107,7 +107,18 @@ export default function About() {
 
                   <div style={{ marginTop: 'clamp(40px, 6vw, 72px)' }}>
                     <div style={{ color: 'var(--gold)', font: '700 11px / 1 var(--font-body)', letterSpacing: '0.28em' }}>OUR TECHNOLOGY</div>
-                    <h3 style={{ fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: 'clamp(32px, 3.4vw, 46px)', marginTop: 14 }}>Sigaram64</h3>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: 18, marginTop: 14 }}>
+                      <img
+                        src="/sigaram64-icon.png"
+                        alt="Sigaram64 logo"
+                        width={54}
+                        height={54}
+                        loading="lazy"
+                        decoding="async"
+                        style={{ borderRadius: 14, border: '1px solid var(--border-gold)', display: 'block', flexShrink: 0 }}
+                      />
+                      <h3 style={{ fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: 'clamp(32px, 3.4vw, 46px)' }}>Sigaram64</h3>
+                    </div>
                     <p style={{ color: 'var(--muted)', lineHeight: 1.8, marginTop: 18, maxWidth: 420 }}>
                       Sigaram64 is Chessbishop's AI-powered chess learning platform, designed to make chess education more interactive,
                       accessible and personalized for learners.
