@@ -226,7 +226,17 @@ export default function About() {
             {crewMembers.map((m, i) => (
               <AnimatedContent key={m.name} delay={0.08 + i * 0.06} from={{ y: 26 }} className="cb-crew-card">
                 {m.photo ? (
-                  <img src={m.photo} alt={`${m.name} — ${m.role}`} width={400} height={500} loading="lazy" decoding="async" className="cb-crew-photo" />
+                  <div className="cb-crew-photo-frame">
+                    <img
+                      src={m.photo}
+                      alt={`${m.name} — ${m.role}`}
+                      width={400}
+                      height={500}
+                      loading="lazy"
+                      decoding="async"
+                      className={`cb-crew-photo${i < 3 ? ' cb-crew-photo--zoom' : ''}`}
+                    />
+                  </div>
                 ) : (
                   <div className="cb-crew-monogram" aria-hidden="true">{m.initials}</div>
                 )}
@@ -235,6 +245,10 @@ export default function About() {
               </AnimatedContent>
             ))}
           </div>
+
+          <AnimatedContent delay={0.3} from={{ y: 20 }}>
+            <div className="cb-crew-quote">“Different minds. One vision. One crew. Limitless possibilities.”</div>
+          </AnimatedContent>
         </div>
       </section>
     </>

@@ -1139,13 +1139,25 @@
   text-align: left;
 }
 
-.cb-crew-photo {
-  width: 100%;
+.cb-crew-photo-frame {
+  position: relative;
+  overflow: hidden;
   aspect-ratio: 4 / 5;
-  object-fit: cover;
   border-radius: 16px;
   border: 1px solid var(--border-gold);
+}
+
+.cb-crew-photo {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
   display: block;
+  transition: transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.cb-crew-photo--zoom {
+  transform: scale(1.14);
+  transform-origin: center;
 }
 
 .cb-crew-monogram {
@@ -1177,6 +1189,27 @@
   font-size: 13px;
   line-height: 1.5;
   margin-top: 6px;
+}
+
+.cb-crew-quote {
+  position: relative;
+  max-width: 780px;
+  margin: 72px auto 0;
+  text-align: center;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: clamp(20px, 2.6vw, 30px);
+  line-height: 1.5;
+  color: var(--ivory);
+}
+
+.cb-crew-quote::before {
+  content: '';
+  display: block;
+  width: 56px;
+  height: 1px;
+  margin: 0 auto 26px;
+  background: linear-gradient(90deg, transparent, var(--gold), transparent);
 }
 
 @media (max-width: 1024px) {
