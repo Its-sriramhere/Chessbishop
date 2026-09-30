@@ -419,7 +419,7 @@ export default function CoachApply() {
           </AnimatedContent>
           <BlurText as="h1" text={'BECOME A\nCHESSBISHOP COACH.'} delay={0.2} stagger={0.035} className="about-title" />
           <AnimatedContent delay={0.35} from={{ y: 20 }}>
-            <p style={{ color: 'var(--muted)', maxWidth: 620, fontSize: 'clamp(16px, 1.2vw, 19px)', lineHeight: 1.75, marginTop: 24 }}>
+            <p style={{ color: 'var(--muted)', maxWidth: 620, fontSize: 'clamp(15px, 1.2vw, 19px)', lineHeight: 1.75, marginTop: 24 }}>
               Share your chess expertise and help develop the next generation of chess players.
             </p>
           </AnimatedContent>

@@ -59,12 +59,12 @@ export default function Home() {
       <section style={{ position: 'relative', minHeight: '100svh', display: 'flex', alignItems: 'center', overflow: 'hidden' }}>
         <div
           aria-hidden="true"
+          className="cb-hero-bg"
           style={{
             position: 'absolute',
             inset: 0,
             backgroundImage: 'url(/bg-image.png)',
             backgroundSize: 'cover',
-            backgroundPosition: 'center',
             opacity: 1,
             transform: 'translateZ(0)',
             willChange: 'transform',
@@ -91,13 +91,13 @@ export default function Home() {
           />
 
           <AnimatedContent delay={1.1} from={{ y: 24, opacity: 0 }}>
-            <p style={{ color: 'var(--muted)', maxWidth: 520, fontSize: 'clamp(15px, 1.4vw, 19px)', lineHeight: 1.7, marginTop: 30 }}>
+            <p style={{ color: 'var(--muted)', maxWidth: 520, fontSize: 'clamp(14px, 1.4vw, 19px)', lineHeight: 1.7, marginTop: 30 }}>
               Build sharper calculation, stronger decision-making and a deeper understanding of the game.
             </p>
           </AnimatedContent>
 
           <AnimatedContent delay={1.45} from={{ y: 18, opacity: 0 }}>
-            <div style={{ display: 'flex', flexWrap: 'wrap', gap: 16, marginTop: 40 }}>
+            <div className="cb-hero-cta" style={{ display: 'flex', flexWrap: 'wrap', gap: 16, marginTop: 40 }}>
               <Link to="/contact" className="btn-gold">
                 START YOUR JOURNEY
                 <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h9.4M8.2 4.2 12 8l-3.8 3.8" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" /></svg>
@@ -107,7 +107,7 @@ export default function Home() {
           </AnimatedContent>
 
           <AnimatedContent delay={1.8} from={{ y: 20, opacity: 0 }}>
-            <div style={{ display: 'flex', gap: 0, marginTop: 56, flexWrap: 'wrap' }}>
+            <div className="cb-hero-stats" style={{ display: 'flex', gap: 0, marginTop: 56, flexWrap: 'wrap' }}>
               {stats.map((s, i) => (
                 <div
                   key={s.label}
@@ -138,7 +138,7 @@ export default function Home() {
           <h2 className="section-title" style={{ textAlign: 'center', marginTop: 40 }}>
             <SplitText delay={0.1}>{'CHESS IS MORE\nTHAN A GAME.'}</SplitText>
           </h2>
-          <p style={{ textAlign: 'center', marginTop: 22, color: 'var(--muted)', fontSize: 'clamp(15px, 1.4vw, 19px)', fontFamily: 'var(--font-display)', fontStyle: 'italic', textWrap: 'balance' }}>
+          <p style={{ textAlign: 'center', marginTop: 22, color: 'var(--muted)', fontSize: 'clamp(14px, 1.4vw, 19px)', fontFamily: 'var(--font-display)', fontStyle: 'italic', textWrap: 'balance' }}>
             <SplitText delay={0.35} stagger={0.1}>IT IS THE DISCIPLINE OF THINKING AHEAD.</SplitText>
           </p>
         </div>
@@ -155,25 +155,16 @@ export default function Home() {
             </h2>
           </AnimatedContent>
 
-          <div
-            style={{
-              display: 'grid',
-              gridTemplateColumns: 'repeat(12, 1fr)',
-              gridAutoRows: 'clamp(118px, 12vw, 150px)',
-              gap: 20,
-              marginTop: 56,
-            }}
-          >
+          <div className="cb-feat-grid" style={{ marginTop: 56 }}>
             {features.map((f, i) => {
               const lead = f.lead
-              const span = lead ? 'span 7' : 'span 5'
-              const rows = lead ? 'span 3' : 'span 1'
               return (
                 <AnimatedContent
                   key={f.title}
                   delay={i * 0.07}
                   from={{ y: 26 }}
-                  style={{ gridColumn: span, gridRow: rows, minWidth: 0 }}
+                  className={lead ? 'cb-feat-lead' : 'cb-feat'}
+                  style={{ minWidth: 0 }}
                 >
                   <SpotlightCard
                     className="glass-card"

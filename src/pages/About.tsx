@@ -33,11 +33,11 @@ export default function About() {
           />
 
           <AnimatedContent delay={0.3} from={{ y: 20 }}>
-            <p style={{ color: 'var(--muted)', maxWidth: 620, fontSize: 'clamp(16px, 1.2vw, 19px)', lineHeight: 1.8, marginTop: 30 }}>
+            <p style={{ color: 'var(--muted)', maxWidth: 620, fontSize: 'clamp(15px, 1.2vw, 19px)', lineHeight: 1.8, marginTop: 30 }}>
               Chessbishop is a privately held LLP dedicated to making structured chess education accessible to students. Through government
               partnerships, the organization provides chess coaching to corporation school students across Tamil Nadu.
             </p>
-            <p style={{ color: 'var(--muted)', maxWidth: 620, fontSize: 'clamp(16px, 1.2vw, 19px)', lineHeight: 1.8, marginTop: 18 }}>
+            <p style={{ color: 'var(--muted)', maxWidth: 620, fontSize: 'clamp(15px, 1.2vw, 19px)', lineHeight: 1.8, marginTop: 18 }}>
               Established in 2021, Chessbishop has been working to expand access to quality chess education through structured coaching
               programs, with its initiatives currently reaching students across four districts in Tamil Nadu.
             </p>
@@ -55,7 +55,7 @@ export default function About() {
                 <GraduationCap size={22} />
               </span>
 
-              <h2 className="section-title" style={{ marginTop: 26, fontSize: 'clamp(24px, 3vw, 42px)' }}>
+              <h2 className="section-title" style={{ marginTop: 26, fontSize: 'clamp(22px, 5.5vw, 42px)' }}>
                 FROM CLASSROOMS TO COMMUNITIES.
               </h2>
 
@@ -117,7 +117,7 @@ export default function About() {
                         decoding="async"
                         style={{ borderRadius: 14, border: '1px solid var(--border-gold)', display: 'block', flexShrink: 0 }}
                       />
-                      <h3 style={{ fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: 'clamp(32px, 3.4vw, 46px)' }}>Sigaram64</h3>
+                      <h3 className="cb-sigaram-title" style={{ fontFamily: 'var(--font-display)', fontWeight: 700 }}>Sigaram64</h3>
                     </div>
                     <p style={{ color: 'var(--muted)', lineHeight: 1.8, marginTop: 18, maxWidth: 420 }}>
                       Sigaram64 is Chessbishop's AI-powered chess learning platform, designed to make chess education more interactive,
@@ -142,7 +142,7 @@ export default function About() {
         <div style={{ ...container, textAlign: 'center' }}>
           <AnimatedContent from={{ y: 20 }}>
             <h2 className="section-title" style={{ maxWidth: 720, marginInline: 'auto' }}>Collaborating with Leading Corporations</h2>
-            <p style={{ color: 'var(--muted)', lineHeight: 1.8, marginTop: 22, maxWidth: 780, marginInline: 'auto', fontSize: 'clamp(15px, 1.2vw, 18px)' }}>
+            <p style={{ color: 'var(--muted)', lineHeight: 1.8, marginTop: 22, maxWidth: 780, marginInline: 'auto', fontSize: 'clamp(14px, 1.2vw, 18px)' }}>
               We are proud to collaborate with local government corporations across Tamil Nadu to bring innovative chess education,
               AI-powered learning, and cognitive development programs to students and communities.
             </p>
@@ -195,7 +195,7 @@ export default function About() {
 
                 <div>
                   <div style={{ color: 'var(--gold)', font: '700 11px / 1 var(--font-body)', letterSpacing: '0.28em' }}>FOUNDER</div>
-                  <h2 style={{ fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: 'clamp(24px, 3vw, 40px)', marginTop: 16 }}>
+                  <h2 style={{ fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: 'clamp(22px, 5.5vw, 32px)', marginTop: 16 }}>
                     Dr. S. A. Suryakumar
                   </h2>
                   <p style={{ color: 'var(--ivory)', fontWeight: 600, lineHeight: 1.8, marginTop: 18, maxWidth: 680 }}>
@@ -283,7 +283,7 @@ export default function About() {
 
                 <div>
                   <div style={{ color: 'var(--gold)', font: '700 11px / 1 var(--font-body)', letterSpacing: '0.28em' }}>CO-FOUNDER</div>
-                  <h2 style={{ fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: 'clamp(24px, 3vw, 40px)', marginTop: 16 }}>
+                  <h2 style={{ fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: 'clamp(22px, 5.5vw, 32px)', marginTop: 16 }}>
                     Mrs. K. Ishwarya
                   </h2>
                   <div style={{ color: 'var(--gold)', fontWeight: 700, fontSize: 'clamp(14px, 1.2vw, 17px)', marginTop: 10 }}>

@@ -481,10 +481,12 @@
   filter: brightness(0.92);
 }
 
-@media (max-width: 640px) {
-  .hero-title {
-    font-size: clamp(42px, 13vw, 82px);
-  }
+.cb-sigaram-title {
+  font-size: clamp(32px, 3.4vw, 46px);
+}
+
+.cb-hero-bg {
+  background-position: center;
 }
 
 .gallery-masonry {
@@ -1667,4 +1669,141 @@
   -webkit-box-orient: vertical;
   overflow: hidden;
   text-wrap: balance;
+}
+
+/* what-chessbishop-does feature grid (desktop geometry preserved) */
+.cb-feat-grid {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  grid-auto-rows: clamp(118px, 12vw, 150px);
+  gap: 20;
+}
+
+.cb-feat {
+  grid-column: span 5;
+  grid-row: span 1;
+}
+
+.cb-feat-lead {
+  grid-column: span 7;
+  grid-row: span 3;
+}
+
+/* career why-chessbishop grid (desktop geometry preserved) */
+.cb-why-grid {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  grid-auto-rows: clamp(130px, 12vw, 170px);
+}
+
+.cb-why {
+  grid-column: span 5;
+  grid-row: span 1;
+}
+
+.cb-why-lead {
+  grid-column: span 7;
+  grid-row: span 1;
+}
+
+/* mobile type scale-down + hero bg focus (must stay last: overrides bases above) */
+@media (max-width: 640px) {
+  .hero-title {
+    font-size: clamp(32px, 9.5vw, 56px);
+  }
+
+  .about-title {
+    font-size: clamp(28px, 7.5vw, 56px);
+  }
+
+  .section-title {
+    font-size: clamp(22px, 5.5vw, 32px);
+  }
+
+  .eyebrow {
+    font-size: 10px;
+    letter-spacing: 0.3em;
+  }
+
+  .cb-sigaram-title {
+    font-size: clamp(26px, 7vw, 34px);
+  }
+
+  .cb-crew-quote {
+    font-size: clamp(17px, 4.5vw, 22px);
+    margin-top: 48px;
+  }
+
+  .cb-crew-name {
+    font-size: 17px;
+  }
+
+  .cb-corp-name {
+    font-size: 13px;
+  }
+
+  .cb-crew-role {
+    font-size: 12px;
+  }
+
+  .cb-hero-bg {
+    background-position: 18% 50%;
+  }
+
+  .hero-title {
+    text-align: center;
+  }
+
+  .cb-hero-cta {
+    justify-content: center;
+  }
+
+  .cb-hero-stats {
+    justify-content: center;
+  }
+
+  .cb-hero-stats > div {
+    text-align: center;
+  }
+
+  .cb-feat-grid {
+    grid-template-columns: 1fr;
+    grid-auto-rows: auto;
+  }
+
+  .cb-feat,
+  .cb-feat-lead {
+    grid-column: 1 / -1;
+    grid-row: auto;
+  }
+
+  .cb-why-grid {
+    grid-template-columns: 1fr;
+    grid-auto-rows: auto;
+  }
+
+  .cb-why,
+  .cb-why-lead {
+    grid-column: 1 / -1;
+    grid-row: auto;
+  }
+
+  .section-title {
+    text-align: center;
+  }
+
+  .eyebrow {
+    display: flex;
+    justify-content: center;
+  }
+
+  section p {
+    text-align: center;
+  }
+
+  .glass-card,
+  .cb-crew-card,
+  .cb-corp-item {
+    text-align: center;
+  }
 }

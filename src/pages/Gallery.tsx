@@ -74,7 +74,7 @@ export default function Gallery() {
             />
           </h1>
           <AnimatedContent delay={0.85} from={{ y: 20 }}>
-            <p style={{ color: 'var(--muted)', maxWidth: 520, fontSize: 'clamp(16px, 1.2vw, 19px)', lineHeight: 1.75, marginTop: 28 }}>
+            <p style={{ color: 'var(--muted)', maxWidth: 520, fontSize: 'clamp(15px, 1.2vw, 19px)', lineHeight: 1.75, marginTop: 28 }}>
               Training. Competition. Community. A glimpse into Chessbishop.
             </p>
           </AnimatedContent>

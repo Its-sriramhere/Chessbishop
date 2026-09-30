@@ -16,10 +16,14 @@ import GalleryDetail from './pages/GalleryDetail'
 import Career from './pages/Career'
 import CoachApply from './pages/CoachApply'
 import Contact from './pages/Contact'
+import Sigaram64 from './pages/Sigaram64'
+import Sigaram64School from './pages/Sigaram64School'
 
 const PAGE_TITLES: Record<string, string> = {
   '/home': 'Chessbishop – Master The Game',
   '/about': 'About – Chessbishop',
+  '/sigaram64': 'Sigaram64 | AI-Powered Chess Learning Platform',
+  '/sigaram64/school': 'School Partnership | Sigaram64',
   '/gallery': 'Gallery – Chessbishop',
   '/gallery/carousel': 'Gallery Carousel – Chessbishop',
   '/career': 'Career – Chessbishop',
@@ -65,6 +69,8 @@ function Shell() {
           <Routes>
             <Route path="/home" element={<Home />} />
             <Route path="/about" element={<About />} />
+            <Route path="/sigaram64" element={<Sigaram64 />} />
+            <Route path="/sigaram64/school" element={<Sigaram64School />} />
             <Route path="/gallery" element={<Gallery />} />
             <Route path="/gallery/carousel" element={<GalleryCarousel />} />
             <Route path="/gallery/:slug" element={<GalleryDetail />} />

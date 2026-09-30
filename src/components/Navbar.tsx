@@ -5,6 +5,7 @@ import './navbar.css'
 const NAV_LINKS: { label: string; path: string; cta?: boolean }[] = [
   { label: 'HOME', path: '/home' },
   { label: 'ABOUT', path: '/about' },
+  { label: 'SIGARAM64', path: '/sigaram64' },
   { label: 'GALLERY', path: '/gallery' },
   { label: 'CAREER', path: '/career' },
   { label: 'CONTACT', path: '/contact' },

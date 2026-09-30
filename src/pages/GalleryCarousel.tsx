@@ -34,7 +34,7 @@ export default function GalleryCarousel() {
         <h1 className="section-title" style={{ marginTop: 20, maxWidth: 760 }}>
           THE DEPTH OF THE BOARD
         </h1>
-        <p style={{ color: 'var(--muted)', maxWidth: 560, fontSize: 'clamp(15px, 1.2vw, 18px)', lineHeight: 1.75, marginTop: 16, marginBottom: 48 }}>
+        <p style={{ color: 'var(--muted)', maxWidth: 560, fontSize: 'clamp(14px, 1.2vw, 18px)', lineHeight: 1.75, marginTop: 16, marginBottom: 48 }}>
           Drag, scroll or use the arrows to walk through Chessbishop — every slide is a position we have lived.
         </p>
 

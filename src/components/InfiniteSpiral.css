@@ -99,3 +99,9 @@
     transition: none;
   }
 }
+
+@media (max-width: 640px) {
+  .infinite-spiral__name {
+    font-size: 14px;
+  }
+}

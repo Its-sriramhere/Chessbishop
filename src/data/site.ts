@@ -200,3 +200,133 @@ export const careers = [
     ],
   },
 ]
+
+export type SigaramPlan = {
+  name: string
+  price: string
+  period: string
+  badge: string
+  blurb: string
+  features: string[]
+  featured?: boolean
+}
+
+export const sigaramPlans: SigaramPlan[] = [
+  {
+    name: 'Gold',
+    price: '₹499',
+    period: '/month',
+    badge: 'AI CHESS COMPANION',
+    blurb: 'The intelligent way to start learning chess.',
+    features: ['AI Assistant', 'Multilingual Support', 'Analytics Dashboard', 'Game Analysis'],
+  },
+  {
+    name: 'Platinum',
+    price: '₹999',
+    period: '/month',
+    badge: 'TRAIN BEYOND SCREENS',
+    blurb: 'Online intelligence plus hands-on physical training.',
+    features: ['Everything in Gold', '2 Days Physical Bootcamp', 'Hands-on Training', 'Strategy Sessions'],
+    featured: true,
+  },
+  {
+    name: 'Diamond',
+    price: '₹1,499',
+    period: '/month',
+    badge: 'LEARN TOGETHER. GROW FASTER.',
+    blurb: 'Live mentorship and group learning for advanced players.',
+    features: ['Everything in Gold + Platinum', 'Weekly 2 Days Online Group Classes', 'Live Sessions', 'Expert Mentorship'],
+  },
+]
+
+export const sigaramFeatures = [
+  {
+    index: '01',
+    title: 'AI-Powered Training',
+    copy: 'Learn with an intelligent chess companion that guides students through concepts, practice, and improvement.',
+  },
+  {
+    index: '02',
+    title: 'Real-Time Analytics',
+    copy: 'Track performance, progress, and learning patterns through easy-to-understand analytics.',
+  },
+  {
+    index: '03',
+    title: 'Game Analysis',
+    copy: 'Review games, identify mistakes, understand positions, and discover opportunities for improvement.',
+  },
+  {
+    index: '04',
+    title: 'Multilingual Support',
+    copy: 'Make chess learning more accessible with multilingual learning support.',
+  },
+  {
+    index: '05',
+    title: 'Structured Learning Path',
+    copy: 'Follow a progressive learning journey from fundamental concepts to advanced strategic thinking.',
+  },
+]
+
+export const sigaramSteps = [
+  {
+    index: '01',
+    title: 'Create Your Profile',
+    copy: 'Set up your learner profile and begin your chess journey.',
+  },
+  {
+    index: '02',
+    title: 'Learn & Play',
+    copy: 'Practice chess concepts and play games through the platform.',
+  },
+  {
+    index: '03',
+    title: 'Analyze',
+    copy: 'Use game analysis and performance insights to understand your play.',
+  },
+  {
+    index: '04',
+    title: 'Improve',
+    copy: 'Follow personalized recommendations and continue developing your skills.',
+  },
+]
+
+export const sigaramFaqs = [
+  {
+    q: 'What is Sigaram64?',
+    a: 'Sigaram64 is an AI-powered chess learning platform combining chess education, game analysis, analytics, and adaptive learning.',
+  },
+  {
+    q: 'Who can use Sigaram64?',
+    a: 'Students, chess learners, parents, schools, and educational organizations.',
+  },
+  {
+    q: 'What does the Gold plan include?',
+    a: 'AI Assistant, multilingual support, analytics dashboard, and game analysis.',
+  },
+  {
+    q: 'What does Platinum add?',
+    a: 'Physical bootcamp, hands-on training, and strategy sessions.',
+  },
+  {
+    q: 'What does Diamond add?',
+    a: 'Online group classes, live sessions, and expert mentorship.',
+  },
+  {
+    q: 'Can schools partner with Sigaram64?',
+    a: 'Yes. Schools can reach out through the contact form by choosing the School Partnership enquiry so the team can plan onboarding.',
+  },
+  {
+    q: 'Can I upgrade my plan?',
+    a: 'Yes. Talk to the team through the contact form and they will help move your subscription to a higher plan.',
+  },
+]
+
+export const sigaramSchoolBenefits = [
+  'AI-powered chess training',
+  'Structured learning paths',
+  'Game analysis',
+  'Student analytics',
+  'Adaptive learning',
+  'Online learning',
+  'Physical training options',
+]

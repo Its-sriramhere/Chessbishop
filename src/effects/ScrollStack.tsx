@@ -67,7 +67,7 @@ export default function ScrollStack({ cards, className = '' }: ScrollStackProps)
                 <h3 className="section-title">{card.title}</h3>
                 <p className="eyebrow" style={{ marginTop: 10 }}>{card.subtitle}</p>
                 {card.description && (
-                  <p style={{ color: 'var(--muted)', maxWidth: 520, marginTop: 14, fontSize: 'clamp(15px, 1.1vw, 18px)' }}>
+                  <p style={{ color: 'var(--muted)', maxWidth: 520, marginTop: 14, fontSize: 'clamp(14px, 1.1vw, 18px)' }}>
                     {card.description}
                   </p>
                 )}

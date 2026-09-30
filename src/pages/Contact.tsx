@@ -29,7 +29,7 @@ const infoRows = [
   { label: 'HOURS', value: 'Mon–Sat · 9:00 AM–7:00 PM' },
 ]
 
-const interests = ['Chess Training', 'Corporate Partnership', 'Tournament', 'Career', 'General Enquiry']
+const interests = ['Chess Training', 'Corporate Partnership', 'Tournament', 'Career', 'Sigaram64 Subscription', 'School Partnership', 'General Enquiry']
 
 type Values = { name: string; email: string; phone: string; interest: string; message: string }
 type Errors = Partial<Record<keyof Values, string>>
@@ -127,7 +127,7 @@ export default function Contact() {
           </AnimatedContent>
           <BlurText as="h1" text={"LET'S MAKE\nYOUR NEXT MOVE."} delay={0.25} className="about-title" />
           <AnimatedContent delay={0.9} from={{ y: 20 }}>
-            <p style={{ color: 'var(--muted)', maxWidth: 540, fontSize: 'clamp(16px, 1.2vw, 19px)', lineHeight: 1.75, marginTop: 28 }}>
+            <p style={{ color: 'var(--muted)', maxWidth: 540, fontSize: 'clamp(15px, 1.2vw, 19px)', lineHeight: 1.75, marginTop: 28 }}>
               Have a question about training, partnerships, careers or Chessbishop? Let's talk.
             </p>
           </AnimatedContent>
@@ -148,11 +148,11 @@ export default function Contact() {
                   <div key={row.label}>
                     <div style={{ color: 'var(--gold)', fontSize: 11, letterSpacing: '0.3em', fontWeight: 700 }}>{row.label}</div>
                     {row.href ? (
-                      <a href={row.href} target={row.href.startsWith('http') ? '_blank' : undefined} rel={row.href.startsWith('http') ? 'noopener noreferrer' : undefined} style={{ color: 'var(--ivory)', marginTop: 6, display: 'inline-block', fontSize: 'clamp(15px, 1.1vw, 18px)', textDecoration: 'none', borderBottom: '1px solid var(--border-gold)', transition: 'color 0.25s, border-color 0.25s' }} onMouseEnter={(e) => (e.currentTarget.style.color = 'var(--gold)')} onMouseLeave={(e) => { e.currentTarget.style.color = ''; e.currentTarget.style.borderBottomColor = '' }}>
+                      <a href={row.href} target={row.href.startsWith('http') ? '_blank' : undefined} rel={row.href.startsWith('http') ? 'noopener noreferrer' : undefined} style={{ color: 'var(--ivory)', marginTop: 6, display: 'inline-block', fontSize: 'clamp(14px, 1.1vw, 18px)', textDecoration: 'none', borderBottom: '1px solid var(--border-gold)', transition: 'color 0.25s, border-color 0.25s' }} onMouseEnter={(e) => (e.currentTarget.style.color = 'var(--gold)')} onMouseLeave={(e) => { e.currentTarget.style.color = ''; e.currentTarget.style.borderBottomColor = '' }}>
                         {row.value}
                       </a>
                     ) : (
-                      <div style={{ color: 'var(--ivory)', marginTop: 6, fontSize: 'clamp(15px, 1.1vw, 18px)' }}>{row.value}</div>
+                      <div style={{ color: 'var(--ivory)', marginTop: 6, fontSize: 'clamp(14px, 1.1vw, 18px)' }}>{row.value}</div>
                     )}
                   </div>
                 ))}
@@ -240,7 +240,7 @@ export default function Contact() {
             <AnimatedContent from={{ y: 20 }} delay={0.1}>
               <span className="eyebrow">Visit Chessbishop</span>
               <h2 className="section-title" style={{ marginTop: 18, fontSize: 'clamp(22px, 2.4vw, 34px)' }}>FIND US IN THANJAVUR.</h2>
-              <div style={{ marginTop: 24, display: 'grid', gap: 4, color: 'var(--ivory)', fontSize: 'clamp(15px, 1.05vw, 17px)', lineHeight: 1.7 }}>
+              <div style={{ marginTop: 24, display: 'grid', gap: 4, color: 'var(--ivory)', fontSize: 'clamp(14px, 1.05vw, 17px)', lineHeight: 1.7 }}>
                 {ADDRESS_LINES.map((line) => (
                   <span key={line}>{line}</span>
                 ))}

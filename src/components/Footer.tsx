@@ -16,6 +16,14 @@ const quickLinks = [
   { label: 'Contact', path: '/contact' },
 ]
 
+const sigaramLinks = [
+  { label: 'Platform', path: '/sigaram64' },
+  { label: 'Features', path: '/sigaram64' },
+  { label: 'Pricing', path: '/sigaram64#pricing' },
+  { label: 'School Partnership', path: '/sigaram64/school' },
+  { label: 'FAQ', path: '/sigaram64' },
+]
+
 const col = {
   display: 'flex',
   flexDirection: 'column' as const,
@@ -79,6 +87,15 @@ export default function Footer() {
             <Link key={l.path} to={l.path} style={{ color: 'var(--muted)', textDecoration: 'none', fontSize: 14, transition: 'color 0.25s' }} onMouseEnter={(e) => (e.currentTarget.style.color = 'var(--ivory)')} onMouseLeave={(e) => (e.currentTarget.style.color = '')}>
               {l.label}
             </Link>
+          ))}
+        </div>
+
+        <div style={col}>
+          <span style={{ color: 'var(--gold)', fontSize: 12, letterSpacing: '0.3em', fontWeight: 700 }}>SIGARAM64</span>
+          {sigaramLinks.map((l) => (
+            <a key={l.label} href={l.path} style={{ color: 'var(--muted)', textDecoration: 'none', fontSize: 14, transition: 'color 0.25s' }} onMouseEnter={(e) => (e.currentTarget.style.color = 'var(--ivory)')} onMouseLeave={(e) => (e.currentTarget.style.color = '')}>
+              {l.label}
+            </a>
           ))}
         </div>
 

@@ -5,7 +5,7 @@
   align-items: center;
   height: 100%;
   line-height: 0;
-  gap: 14px;
+  gap: 0;
   text-decoration: none;
   color: var(--ivory);
   flex-shrink: 0;
@@ -194,10 +194,11 @@
 
 @media (max-width: 600px) {
   .cb-nav-brand {
-    gap: 10px;
+    gap: 0;
   }
   .cb-nav-logo-wrap {
-    display: none;
+    display: inline-flex;
+    height: 36px;
   }
   .cb-nav-emblem-wrap {
     height: 50px;

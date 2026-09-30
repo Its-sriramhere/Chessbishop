@@ -32,7 +32,7 @@ export default function Career() {
           </AnimatedContent>
           <BlurText as="h1" text={'BUILD THE\nFUTURE OF CHESS\nWITH US.'} delay={0.25} className="about-title" />
           <AnimatedContent delay={1} from={{ y: 20 }}>
-            <p style={{ color: 'var(--muted)', maxWidth: 560, fontSize: 'clamp(16px, 1.2vw, 19px)', lineHeight: 1.75, marginTop: 28 }}>
+            <p style={{ color: 'var(--muted)', maxWidth: 560, fontSize: 'clamp(15px, 1.2vw, 19px)', lineHeight: 1.75, marginTop: 28 }}>
               We're looking for people who care about chess, education, technology and building meaningful experiences.
             </p>
           </AnimatedContent>
@@ -54,11 +54,10 @@ export default function Career() {
             <h2 className="section-title" style={{ marginTop: 18, maxWidth: 620 }}>MORE THAN A JOB. A MOVE UP.</h2>
           </AnimatedContent>
 
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(12, 1fr)', gridAutoRows: 'clamp(130px, 12vw, 170px)', gap: 18, marginTop: 48 }}>
+          <div className="cb-why-grid" style={{ gap: 18, marginTop: 48 }}>
             {whyCards.map((c, i) => {
-              const span = c.lead ? 'span 7' : 'span 5'
               return (
-                <AnimatedContent key={c.title} delay={i * 0.07} from={{ y: 26 }} style={{ gridColumn: span, gridRow: 'span 1', minWidth: 0 }}>
+                <AnimatedContent key={c.title} delay={i * 0.07} from={{ y: 26 }} className={c.lead ? 'cb-why-lead' : 'cb-why'} style={{ minWidth: 0 }}>
                   <SpotlightCard className="glass-card" style={{ height: '100%' }} spotlightColor={c.lead ? 'rgba(216, 182, 106, 0.14)' : 'rgba(99, 169, 133, 0.12)'}>
                     <div style={{ height: '100%', display: 'flex', flexDirection: 'column', padding: c.lead ? 'clamp(24px, 2.4vw, 34px)' : 'clamp(18px, 1.8vw, 24px)' }}>
                       <h3 style={{ fontFamily: 'var(--font-display)', fontSize: 'clamp(18px, 1.5vw, 24px)', letterSpacing: '0.08em' }}>{c.title}</h3>
