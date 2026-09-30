@@ -41,6 +41,17 @@ const stats = [
   { value: 40, suffix: '+', label: 'Countries' },
 ]
 
+const SPIRAL_CAPTIONS: Record<string, string> = {
+  'dhonis-trophy-prize-distribution': "Dhoni's Trophy",
+  'students-achievements-and-events': 'Achievements',
+  'dice-chess-diploma-tournament-riga-latvia': 'Dice chess',
+  'indorse-2k18-chess-event': 'Indorse 2k18',
+  'roots-of-chessbishop': 'roots of chessbishop',
+  'tambaram-corporation-inauguration': 'tambaram',
+  'tirupur-corporation-inauguration': 'Tirupur',
+  'journey-first-step-nagapattinam': 'nagapattinam',
+}
+
 export default function Home() {
   return (
     <>
@@ -54,8 +65,9 @@ export default function Home() {
             backgroundImage: 'url(/bg-image.png)',
             backgroundSize: 'cover',
             backgroundPosition: 'center',
-            animation: 'ken-burns 26s ease-in-out infinite alternate',
             opacity: 1,
+            transform: 'translateZ(0)',
+            willChange: 'transform',
           }}
         />
         <div aria-hidden="true" style={{ position: 'absolute', inset: 0, background: 'linear-gradient(180deg, rgba(5,6,5,0.35) 0%, rgba(5,6,5,0.75) 55%, #050605 100%)' }} />
@@ -239,6 +251,8 @@ export default function Home() {
                 src: g.images.length ? g.cover : GALLERY_PLACEHOLDER,
                 alt: g.title,
                 label: `${g.title}, ${g.category}`,
+                caption:
+                  SPIRAL_CAPTIONS[g.slug] ?? g.title,
                 href: `/gallery/${g.slug}`,
               }))}
               animationMode="auto"

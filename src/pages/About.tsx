@@ -198,11 +198,11 @@ export default function About() {
                   <h2 style={{ fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: 'clamp(24px, 3vw, 40px)', marginTop: 16 }}>
                     Dr. S. A. Suryakumar
                   </h2>
-                  <p style={{ color: 'var(--muted)', lineHeight: 1.8, marginTop: 18, maxWidth: 680 }}>
+                  <p style={{ color: 'var(--ivory)', fontWeight: 600, lineHeight: 1.8, marginTop: 18, maxWidth: 680 }}>
                     Dr. S. A. Suryakumar is the founder of Chessbishop, with a vision to combine structured chess education, technology and
                     accessible learning opportunities to help develop the next generation of thinkers.
                   </p>
-                  <p style={{ color: 'var(--muted)', lineHeight: 1.8, marginTop: 16, maxWidth: 680 }}>
+                  <p style={{ color: 'var(--ivory)', fontWeight: 600, lineHeight: 1.8, marginTop: 16, maxWidth: 680 }}>
                     Dr. S. A. Suryakumar is a FIDE National Instructor and International FIDE-Rated Player with 12+ years of coaching
                     experience. Combining deep emotional intelligence with structured chess methodology, he personalises every training
                     journey for measurable improvement.
@@ -292,12 +292,12 @@ export default function About() {
                   <div style={{ color: 'var(--muted)', fontSize: 'clamp(13px, 1vw, 15px)', marginTop: 4 }}>
                     M.Sc., B.Ed.
                   </div>
-                  <p style={{ color: 'var(--muted)', lineHeight: 1.8, marginTop: 18, maxWidth: 680 }}>
+                  <p style={{ color: 'var(--ivory)', fontWeight: 600, lineHeight: 1.8, marginTop: 18, maxWidth: 680 }}>
                     With 2+ years of experience in chess coaching, Mrs. K. Ishwarya is passionate about nurturing young minds through
                     chess and innovative education. As Co-Founder &amp; Managing Director, she plays an active role in academic
                     planning, student development, team coordination, and organizational growth.
                   </p>
-                  <p style={{ color: 'var(--muted)', lineHeight: 1.8, marginTop: 16, maxWidth: 680 }}>
+                  <p style={{ color: 'var(--ivory)', fontWeight: 600, lineHeight: 1.8, marginTop: 16, maxWidth: 680 }}>
                     Her vision is to make chess education more engaging and accessible by combining strategic thinking, technology,
                     and AI-powered learning, helping students develop concentration, problem-solving, creativity, and
                     decision-making skills.

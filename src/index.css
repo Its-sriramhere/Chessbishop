@@ -1259,6 +1259,16 @@
   color: var(--ivory);
 }
 
+@supports (background-clip: text) or (-webkit-background-clip: text) {
+  .cb-crew-quote {
+    background: linear-gradient(100deg, var(--gold) 0%, var(--gold-soft) 38%, var(--ivory) 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    -webkit-text-fill-color: transparent;
+  }
+}
+
 .cb-crew-quote::before {
   content: '';
   display: block;

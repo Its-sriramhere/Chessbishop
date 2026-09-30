@@ -12,6 +12,7 @@ export type InfiniteSpiralItem = {
   src: string
   alt?: string
   label?: string
+  caption?: string
   href?: string
   id?: string
   target?: string
@@ -296,6 +297,11 @@ const InfiniteSpiral = ({
                 }}
               />
               <div aria-hidden="true" className="infinite-spiral__scrim" />
+              {item.caption && (
+                <span aria-hidden="true" className="infinite-spiral__name">
+                  {item.caption}
+                </span>
+              )}
               <span aria-hidden="true" className="infinite-spiral__cta">
                 VIEW <span aria-hidden="true">→</span>
               </span>

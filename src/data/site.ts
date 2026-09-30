@@ -73,7 +73,7 @@ export const galleryItems: GalleryItem[] = [
     category: 'COMMUNITY',
     cover: studentsImages[0],
     images: studentsImages,
-    viewer: 'accordion',
+    viewer: 'grid',
     tall: true,
   },
   {
