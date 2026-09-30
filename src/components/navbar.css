@@ -15,7 +15,7 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  height: clamp(38px, 4vh, 48px);
+  height: clamp(50px, 5.5vh, 64px);
   border-radius: 12px;
   overflow: hidden;
   box-shadow: 0 0 22px rgba(216, 182, 106, 0.28);
@@ -33,7 +33,7 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  height: clamp(38px, 4vh, 48px);
+  height: clamp(50px, 5.5vh, 64px);
   border-radius: 12px;
   overflow: hidden;
   border: 1px solid var(--border-gold);
@@ -200,7 +200,7 @@
     display: none;
   }
   .cb-nav-emblem-wrap {
-    height: 38px;
+    height: 50px;
     transform: translateY(-2px);
   }
 }

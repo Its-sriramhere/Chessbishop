@@ -295,6 +295,10 @@ const InfiniteSpiral = ({
                   filter: `grayscale(${Math.min(1, Math.max(0, grayscale))})`,
                 }}
               />
+              <div aria-hidden="true" className="infinite-spiral__scrim" />
+              <span aria-hidden="true" className="infinite-spiral__cta">
+                VIEW <span aria-hidden="true">→</span>
+              </span>
             </Card>
           )
         })}

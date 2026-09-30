@@ -50,6 +50,11 @@ export const nagapattinamImages = Array.from(
   (_, i) => `/gallery/journey-first-step-nagapattinam/nagapattinam-${String(i + 1).padStart(3, '0')}.jpg`,
 )
 
+export const studentsImages = Array.from(
+  { length: 14 },
+  (_, i) => `/gallery/students-achievements-and-events/students-${String(i + 1).padStart(3, '0')}.jpg`,
+)
+
 export const galleryCategories = ['ALL', 'TRAINING', 'TOURNAMENTS', 'EVENTS', 'COMMUNITY'] as const
 
 export const galleryItems: GalleryItem[] = [
@@ -66,8 +71,8 @@ export const galleryItems: GalleryItem[] = [
     slug: 'students-achievements-and-events',
     title: 'Student’s Achievements and Events',
     category: 'COMMUNITY',
-    cover: GALLERY_PLACEHOLDER,
-    images: [],
+    cover: studentsImages[0],
+    images: studentsImages,
     viewer: 'accordion',
     tall: true,
   },

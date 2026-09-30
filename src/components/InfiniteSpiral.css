@@ -48,6 +48,33 @@
   user-select: none;
 }
 
+.infinite-spiral__scrim {
+  position: absolute;
+  inset: auto 0 0 0;
+  height: 46%;
+  background: linear-gradient(180deg, transparent, rgba(5, 6, 5, 0.85));
+  pointer-events: none;
+}
+
+.infinite-spiral__cta {
+  position: absolute;
+  left: 50%;
+  bottom: 12px;
+  transform: translateX(-50%);
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 14px;
+  border: 1px solid rgb(216 182 106 / 0.6);
+  border-radius: 999px;
+  background: rgba(5, 6, 5, 0.55);
+  color: var(--gold);
+  font: 700 10px / 1 var(--font-body);
+  letter-spacing: 0.24em;
+  white-space: nowrap;
+  pointer-events: none;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .infinite-spiral__item {
     transition: none;

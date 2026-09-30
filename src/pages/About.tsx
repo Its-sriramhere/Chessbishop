@@ -136,6 +136,46 @@ export default function About() {
         </div>
       </section>
 
+      {/* About — collaborating corporations */}
+      <section style={{ ...sectionStyle, paddingTop: 0 }}>
+        <SectionBackground />
+        <div style={{ ...container, textAlign: 'center' }}>
+          <AnimatedContent from={{ y: 20 }}>
+            <h2 className="section-title" style={{ maxWidth: 720, marginInline: 'auto' }}>Collaborating with Leading Corporations</h2>
+            <p style={{ color: 'var(--muted)', lineHeight: 1.8, marginTop: 22, maxWidth: 780, marginInline: 'auto', fontSize: 'clamp(15px, 1.2vw, 18px)' }}>
+              We are proud to collaborate with local government corporations across Tamil Nadu to bring innovative chess education,
+              AI-powered learning, and cognitive development programs to students and communities.
+            </p>
+          </AnimatedContent>
+
+          <AnimatedContent delay={0.1} from={{ y: 20 }}>
+            <div style={{ color: 'var(--gold)', font: '700 11px / 1 var(--font-body)', letterSpacing: '0.28em', marginTop: 56 }}>
+              OUR COLLABORATIONS
+            </div>
+          </AnimatedContent>
+
+          <div className="cb-corp-strip" style={{ marginTop: 36 }}>
+            {[
+              { name: 'Coimbatore Corporation', logo: '/corporations/coimbatore.png' },
+              { name: 'Tiruppur Corporation', logo: '/corporations/tirupur.png' },
+              { name: 'Tambaram Corporation', logo: '/corporations/tambaram.png' },
+              { name: 'Nagapattinam Corporation', logo: '/corporations/nagapattinam.png' },
+            ].map((c, i) => (
+              <AnimatedContent key={c.name} delay={0.08 + i * 0.06} from={{ y: 22 }} className="cb-corp-item">
+                <div className="cb-corp-tile">
+                  <img src={c.logo} alt={`${c.name} logo`} width={200} height={200} loading="lazy" decoding="async" className="cb-corp-logo" />
+                </div>
+                <div className="cb-corp-name">{c.name}</div>
+              </AnimatedContent>
+            ))}
+          </div>
+
+          <AnimatedContent delay={0.25} from={{ y: 20 }}>
+            <div className="cb-crew-quote">“Building better thinkers today for a smarter society tomorrow.”</div>
+          </AnimatedContent>
+        </div>
+      </section>
+
       {/* About — founder */}
       <section style={{ ...sectionStyle, paddingTop: 0 }}>
         <SectionBackground />
@@ -217,6 +257,51 @@ export default function About() {
                     <br />
                     India
                   </div>
+                </div>
+              </div>
+            </div>
+          </AnimatedContent>
+        </div>
+      </section>
+
+      {/* About — co-founder */}
+      <section style={{ ...sectionStyle, paddingTop: 0 }}>
+        <SectionBackground />
+        <div style={container}>
+          <AnimatedContent delay={0.15} from={{ y: 26 }}>
+            <div className="cb-about-card">
+              <div className="cb-founder-grid">
+                <img
+                  src="/people/cofounder.jpg"
+                  alt="Mrs. K. Ishwarya"
+                  width={188}
+                  height={235}
+                  loading="lazy"
+                  decoding="async"
+                  className="cb-founder-photo"
+                />
+
+                <div>
+                  <div style={{ color: 'var(--gold)', font: '700 11px / 1 var(--font-body)', letterSpacing: '0.28em' }}>CO-FOUNDER</div>
+                  <h2 style={{ fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: 'clamp(24px, 3vw, 40px)', marginTop: 16 }}>
+                    Mrs. K. Ishwarya
+                  </h2>
+                  <div style={{ color: 'var(--gold)', fontWeight: 700, fontSize: 'clamp(14px, 1.2vw, 17px)', marginTop: 10 }}>
+                    Co-Founder &amp; Managing Director
+                  </div>
+                  <div style={{ color: 'var(--muted)', fontSize: 'clamp(13px, 1vw, 15px)', marginTop: 4 }}>
+                    M.Sc., B.Ed.
+                  </div>
+                  <p style={{ color: 'var(--muted)', lineHeight: 1.8, marginTop: 18, maxWidth: 680 }}>
+                    With 2+ years of experience in chess coaching, Mrs. K. Ishwarya is passionate about nurturing young minds through
+                    chess and innovative education. As Co-Founder &amp; Managing Director, she plays an active role in academic
+                    planning, student development, team coordination, and organizational growth.
+                  </p>
+                  <p style={{ color: 'var(--muted)', lineHeight: 1.8, marginTop: 16, maxWidth: 680 }}>
+                    Her vision is to make chess education more engaging and accessible by combining strategic thinking, technology,
+                    and AI-powered learning, helping students develop concentration, problem-solving, creativity, and
+                    decision-making skills.
+                  </p>
                 </div>
               </div>
             </div>
