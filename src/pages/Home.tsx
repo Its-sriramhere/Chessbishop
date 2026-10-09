@@ -1,3 +1,4 @@
+import { useEffect, useRef } from 'react'
 import { Link } from 'react-router-dom'
 import Aurora from '../effects/Aurora'
 import Particles from '../effects/Particles'
@@ -36,7 +37,7 @@ const features = [
 ]
 
 const stats = [
-  { value: 10000, suffix: '+', label: 'Students' },
+  { value: 10000, suffix: '+', label: 'Students', from: 9900 },
   { value: 25, suffix: '+', label: 'Coaches' },
   { value: 40, suffix: '+', label: 'Countries' },
 ]
@@ -53,31 +54,56 @@ const SPIRAL_CAPTIONS: Record<string, string> = {
 }
 
 export default function Home() {
+  const heroBgRef = useRef<HTMLDivElement | null>(null)
+
+  useEffect(() => {
+    const bg = heroBgRef.current
+    if (!bg) return
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
+    let raf = 0
+    let lastScale = 1
+    const update = () => {
+      raf = 0
+      const progress = Math.min(Math.max(window.scrollY / Math.max(window.innerHeight, 1), 0), 1)
+      const scale = Math.round((1 + progress * 0.08) * 1000) / 1000
+      if (scale === lastScale) return
+      lastScale = scale
+      bg.style.transform = scale === 1 ? '' : `scale(${scale})`
+    }
+    const onScroll = () => {
+      if (raf) return
+      raf = requestAnimationFrame(update)
+    }
+    update()
+    window.addEventListener('scroll', onScroll, { passive: true })
+    return () => {
+      if (raf) cancelAnimationFrame(raf)
+      window.removeEventListener('scroll', onScroll)
+    }
+  }, [])
+
   return (
     <>
       {/* SECTION 01 — Cinematic Hero */}
       <section style={{ position: 'relative', minHeight: '100svh', display: 'flex', alignItems: 'center', overflow: 'hidden' }}>
         <div
           aria-hidden="true"
+          ref={heroBgRef}
           className="cb-hero-bg"
           style={{
             position: 'absolute',
             inset: 0,
-            backgroundImage: 'url(/bg-image.png)',
-            backgroundSize: 'cover',
             opacity: 1,
-            transform: 'translateZ(0)',
-            willChange: 'transform',
           }}
         />
         <div aria-hidden="true" style={{ position: 'absolute', inset: 0, background: 'linear-gradient(180deg, rgba(5,6,5,0.35) 0%, rgba(5,6,5,0.75) 55%, #050605 100%)' }} />
-        <div aria-hidden="true" className="chess-grid-grid" style={{ position: 'absolute', inset: 0, maskImage: 'radial-gradient(1000px 640px at 50% 45%, black, transparent 78%)', WebkitMaskImage: 'radial-gradient(1000px 640px at 50% 45%, black, transparent 78%)' }} />
+        <div aria-hidden="true" className="chess-grid-grid" style={{ position: 'absolute', inset: 0 }} />
         <Aurora intensity={0.55} />
         <Particles count={40} />
 
         <div style={{ ...container, paddingBlock: 'clamp(120px, 18vh, 200px)', display: 'grid', gridTemplateColumns: 'repeat(12, 1fr)', alignItems: 'center' }}>
           <div className="hero-statement">
-          <AnimatedContent delay={0.3} from={{ y: 16, opacity: 0 }}>
+          <AnimatedContent delay={0.3} from={{ y: 16, opacity: 0 }} once>
             <span className="eyebrow">The Art Of Chess</span>
           </AnimatedContent>
 
@@ -87,16 +113,17 @@ export default function Home() {
             delay={0.25}
             stagger={0.045}
             duration={0.8}
+            once
             className="hero-title"
           />
 
-          <AnimatedContent delay={1.1} from={{ y: 24, opacity: 0 }}>
+          <AnimatedContent delay={1.1} from={{ y: 24, opacity: 0 }} once>
             <p style={{ color: 'var(--muted)', maxWidth: 520, fontSize: 'clamp(14px, 1.4vw, 19px)', lineHeight: 1.7, marginTop: 30 }}>
               Build sharper calculation, stronger decision-making and a deeper understanding of the game.
             </p>
           </AnimatedContent>
 
-          <AnimatedContent delay={1.45} from={{ y: 18, opacity: 0 }}>
+          <AnimatedContent delay={1.45} from={{ y: 18, opacity: 0 }} once>
             <div className="cb-hero-cta" style={{ display: 'flex', flexWrap: 'wrap', gap: 16, marginTop: 40 }}>
               <Link to="/contact" className="btn-gold">
                 START YOUR JOURNEY
@@ -106,7 +133,7 @@ export default function Home() {
             </div>
           </AnimatedContent>
 
-          <AnimatedContent delay={1.8} from={{ y: 20, opacity: 0 }}>
+          <AnimatedContent delay={1.8} from={{ y: 20, opacity: 0 }} once>
             <div className="cb-hero-stats" style={{ display: 'flex', gap: 0, marginTop: 56, flexWrap: 'wrap' }}>
               {stats.map((s, i) => (
                 <div
@@ -118,7 +145,7 @@ export default function Home() {
                   }}
                 >
                   <div className="stat-number" style={{ fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: 'clamp(26px, 3vw, 40px)', color: 'var(--gold-soft)' }}>
-                    <CountUp to={s.value} separator="," />
+                    <CountUp to={s.value} from={s.from ?? 0} separator="," />
                     {s.suffix}
                   </div>
                   <div style={{ color: 'var(--muted)', letterSpacing: '0.24em', fontSize: 12, marginTop: 6, fontWeight: 600 }}>{s.label}</div>
@@ -239,7 +266,7 @@ export default function Home() {
           <AnimatedContent from={{ y: 24 }} delay={0.1} style={{ marginTop: 48, height: 'clamp(480px, 62vh, 660px)' }}>
             <InfiniteSpiral
               items={galleryItems.map((g) => ({
-                src: g.images.length ? g.cover : GALLERY_PLACEHOLDER,
+                src: g.thumbnail ?? (g.images.length ? g.cover : GALLERY_PLACEHOLDER),
                 alt: g.title,
                 label: `${g.title}, ${g.category}`,
                 caption:

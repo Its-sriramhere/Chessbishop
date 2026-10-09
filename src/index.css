@@ -370,6 +370,8 @@
       linear-gradient(rgba(244, 240, 230, 0.045) 1px, transparent 1px),
       linear-gradient(90deg, rgba(244, 240, 230, 0.045) 1px, transparent 1px);
     background-size: clamp(44px, 6vw, 96px) clamp(44px, 6vw, 96px);
+    -webkit-mask-image: radial-gradient(1000px 640px at 50% 45%, black, transparent 78%);
+    mask-image: radial-gradient(1000px 640px at 50% 45%, black, transparent 78%);
   }
 
   .stat-number {
@@ -486,7 +488,16 @@
 }
 
 .cb-hero-bg {
+  background-color: #050605;
+  background-image: url('/bg-image-1600.jpg');
+  background-size: cover;
+  background-repeat: no-repeat;
   background-position: center;
+}
+
+.aurora-layer {
+  filter: blur(90px);
+  mix-blend-mode: screen;
 }
 
 .gallery-masonry {
@@ -1747,7 +1758,19 @@
   }
 
   .cb-hero-bg {
+    background-image: url('/bg-image-960.jpg');
     background-position: 18% 50%;
+  }
+
+  .aurora-layer {
+    filter: blur(48px);
+    mix-blend-mode: normal;
+  }
+
+  .chess-grid-grid {
+    -webkit-mask-image: none;
+    mask-image: none;
+    opacity: 0.55;
   }
 
   .hero-title {

@@ -5,6 +5,7 @@ export type GalleryItem = {
   title: string
   category: string
   cover: string
+  thumbnail?: string
   images: string[]
   viewer: GalleryViewer
   tall?: boolean
@@ -63,6 +64,7 @@ export const galleryItems: GalleryItem[] = [
     title: 'Dhoni’s Trophy Prize Distribution',
     category: 'TOURNAMENTS',
     cover: dhoniTrophyImages[0],
+    thumbnail: '/gallery/dhoni-trophy/dhoni-00-thumb.jpg',
     images: dhoniTrophyImages,
     viewer: 'drift',
     wide: true,
@@ -72,6 +74,7 @@ export const galleryItems: GalleryItem[] = [
     title: 'Student’s Achievements and Events',
     category: 'COMMUNITY',
     cover: studentsImages[0],
+    thumbnail: '/gallery/students-achievements-and-events/students-001-thumb.jpg',
     images: studentsImages,
     viewer: 'grid',
     tall: true,
@@ -81,6 +84,7 @@ export const galleryItems: GalleryItem[] = [
     title: 'Dice Chess Diploma Tournament (Riga, Latvia)',
     category: 'TOURNAMENTS',
     cover: diceChessImages[0],
+    thumbnail: '/gallery/dice-chess-diploma-tournament-riga-latvia/dice-01-thumb.jpg',
     images: diceChessImages,
     viewer: 'grid',
   },
@@ -89,6 +93,7 @@ export const galleryItems: GalleryItem[] = [
     title: 'Indorse 2k18 Chess Event — Private Business School, Tamil Nadu',
     category: 'EVENTS',
     cover: indorseImages[0],
+    thumbnail: '/gallery/indorse-2k18-chess-event/indorse-01-thumb.jpg',
     images: indorseImages,
     viewer: 'grid',
   },
@@ -97,6 +102,7 @@ export const galleryItems: GalleryItem[] = [
     title: 'Roots of Chessbishop',
     category: 'COMMUNITY',
     cover: rootsImages[0],
+    thumbnail: '/gallery/roots-of-chessbishop/roots-01-thumb.jpg',
     images: rootsImages,
     viewer: 'grid',
   },
@@ -105,6 +111,7 @@ export const galleryItems: GalleryItem[] = [
     title: 'Tambaram Corporation Inauguration',
     category: 'EVENTS',
     cover: tambaramImages[0],
+    thumbnail: '/gallery/tambaram-corporation-inauguration/tambaram-001-thumb.jpg',
     images: tambaramImages,
     viewer: 'grid',
   },
@@ -113,6 +120,7 @@ export const galleryItems: GalleryItem[] = [
     title: 'Tirupur Corporation Inauguration',
     category: 'EVENTS',
     cover: tirupurImages[0],
+    thumbnail: '/gallery/tirupur-corporation-inauguration/tirupur-001-thumb.jpg',
     images: tirupurImages,
     viewer: 'grid',
   },
@@ -121,6 +129,7 @@ export const galleryItems: GalleryItem[] = [
     title: 'Journey of the First Step to Nagapattinam',
     category: 'EVENTS',
     cover: nagapattinamImages[0],
+    thumbnail: '/gallery/journey-first-step-nagapattinam/nagapattinam-001-thumb.jpg',
     images: nagapattinamImages,
     viewer: 'grid',
   },

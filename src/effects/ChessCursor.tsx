@@ -20,25 +20,34 @@ export default function ChessCursor() {
     const move = (e: PointerEvent) => {
       mx = e.clientX
       my = e.clientY
-      dot.style.transform = `translate(${mx - 3}px, ${my - 3}px)`
+      dot.style.transform = `translate3d(${mx - 3}px, ${my - 3}px, 0)`
       const interactive = (e.target as HTMLElement).closest('a, button, [role="button"], input, textarea, select')
       ring.style.width = interactive ? '56px' : '34px'
       ring.style.height = interactive ? '56px' : '34px'
     }
 
     const loop = () => {
+      if (document.hidden) {
+        raf = 0
+        return
+      }
       rx += (mx - rx) * 0.16
       ry += (my - ry) * 0.16
-      ring.style.left = `${rx - 17}px`
-      ring.style.top = `${ry - 17}px`
+      ring.style.transform = `translate3d(${rx}px, ${ry}px, 0) translate(-50%, -50%)`
       raf = requestAnimationFrame(loop)
     }
 
+    const handleVisibility = () => {
+      if (!document.hidden && !raf) raf = requestAnimationFrame(loop)
+    }
+
     window.addEventListener('pointermove', move)
+    document.addEventListener('visibilitychange', handleVisibility)
     raf = requestAnimationFrame(loop)
     return () => {
       document.documentElement.classList.remove('cb-cursor-on')
       window.removeEventListener('pointermove', move)
+      document.removeEventListener('visibilitychange', handleVisibility)
       cancelAnimationFrame(raf)
     }
   }, [])

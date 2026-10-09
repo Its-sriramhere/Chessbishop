@@ -365,13 +365,27 @@ export default function Sigaram64School() {
                 <div role="alert" style={{ textAlign: 'center', paddingBlock: 40 }}>
                   <h2 style={{ fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: 'clamp(24px, 2.6vw, 36px)' }}>SOMETHING WENT WRONG</h2>
                   <p style={{ color: 'var(--muted)', marginTop: 14, lineHeight: 1.75 }}>
-                    We couldn&apos;t submit your request right now. Please try again or contact our team directly.
+                    We couldn&apos;t submit your request right now. Please try again or reach our team directly —
+                    your details above are kept.
                   </p>
                   <div style={{ display: 'flex', flexWrap: 'wrap', gap: 16, marginTop: 28, justifyContent: 'center' }}>
                     <button type="button" className="btn-gold" onClick={() => setStatus('idle')} style={{ cursor: 'pointer' }}>
                       TRY AGAIN
                     </button>
-                    <Link to="/contact" className="btn-outline">CONTACT US</Link>
+                    <a
+                      href={`https://wa.me/919489494730?text=${encodeURIComponent(`School partnership enquiry from ${values.schoolName.trim() || 'a school'} (${values.city.trim() || 'city unknown'}). Reference: ${values.contactName.trim() || 'name unknown'}, ${values.phone.trim() || 'no phone'}.`)}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="btn-outline"
+                    >
+                      WHATSAPP US
+                    </a>
+                    <a
+                      href={`mailto:teamchessbishop@gmail.com?subject=${encodeURIComponent('Sigaram64 School Partnership Request')}&body=${encodeURIComponent(`School: ${values.schoolName.trim()}\nCity: ${values.city.trim()}\nContact: ${values.contactName.trim()}\nPhone: ${values.phone.trim()}\nEmail: ${values.email.trim()}\nPrograms: ${programs.join(', ')}`)}`}
+                      className="btn-outline"
+                    >
+                      EMAIL US
+                    </a>
                   </div>
                 </div>
               ) : (

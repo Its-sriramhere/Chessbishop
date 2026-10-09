@@ -1,4 +1,4 @@
-import { useRef, type CSSProperties, type ReactNode } from 'react'
+import { useEffect, useRef, useState, type CSSProperties, type ReactNode } from 'react'
 import { useInViewToggle } from './useInView'
 
 type AnimatedContentProps = {
@@ -8,6 +8,7 @@ type AnimatedContentProps = {
   delay?: number
   from?: { opacity?: number; y?: number; x?: number; blur?: number; scale?: number }
   duration?: number
+  once?: boolean
   as?: 'div' | 'section' | 'li' | 'span' | 'article'
 }
 
@@ -18,10 +19,18 @@ export default function AnimatedContent({
   delay = 0,
   from = {},
   duration = 0.9,
+  once = false,
   as: Tag = 'div',
 }: AnimatedContentProps) {
   const ref = useRef<HTMLDivElement | null>(null)
   const inView = useInViewToggle(ref, '0px 0px -12% 0px')
+  const [hasShown, setHasShown] = useState(false)
+
+  useEffect(() => {
+    if (inView) setHasShown(true)
+  }, [inView])
+
+  const show = once ? hasShown : inView
 
   const hidden: CSSProperties = {
     opacity: from.opacity ?? 0,
@@ -39,9 +48,9 @@ export default function AnimatedContent({
       ref={ref as React.Ref<never>}
       className={className}
       style={{
-        ...(inView ? shown : hidden),
+        ...(show ? shown : hidden),
         transition: `opacity ${duration}s ease, transform ${duration}s cubic-bezier(0.22,1,0.36,1), filter ${duration}s ease`,
-        transitionDelay: inView ? `${delay}s` : '0s',
+        transitionDelay: show ? `${delay}s` : '0s',
         willChange: 'opacity, transform, filter',
         ...style,
       }}

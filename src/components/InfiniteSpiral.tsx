@@ -77,6 +77,9 @@ const InfiniteSpiral = ({
   const draggingRef = useRef(false)
   const lastPointerYRef = useRef(0)
   const dragMovedRef = useRef(false)
+  const wakeRef = useRef<() => void>(() => {})
+  const idleRef = useRef(false)
+  const lastCardStateRef = useRef<string[]>([])
 
   const normalizedItems = useMemo(
     () =>
@@ -92,9 +95,18 @@ const InfiniteSpiral = ({
     const root = rootRef.current
     if (!root || normalizedItems.length === 0) return
 
-    let frameId: number
+    let frameId = 0
     let previousTime = performance.now()
     let bounds = root.getBoundingClientRect()
+    idleRef.current = false
+    lastCardStateRef.current = []
+    const wake = () => {
+      if (!idleRef.current) return
+      idleRef.current = false
+      previousTime = performance.now()
+      frameId = requestAnimationFrame(render)
+    }
+    wakeRef.current = wake
     const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)')
     const scrollEnabled = animationMode === 'scroll' || animationMode === 'all'
     const scrollSpeedMultiplier = Math.max(speed, 0) / 0.55
@@ -108,6 +120,7 @@ const InfiniteSpiral = ({
     const intersectionObserver = new IntersectionObserver(
       ([entry]) => {
         visibleRef.current = entry.isIntersecting
+        if (entry.isIntersecting) wake()
       },
       { threshold: 0.02 },
     )
@@ -123,6 +136,7 @@ const InfiniteSpiral = ({
         -1.5,
         1.5,
       )
+      wake()
     }
     window.addEventListener('scroll', handleScroll, { passive: true })
 
@@ -143,6 +157,17 @@ const InfiniteSpiral = ({
 
       const followBlend = 1 - Math.exp(-delta * (draggingRef.current ? 22 : 11))
       progressRef.current += (targetProgressRef.current - progressRef.current) * followBlend
+
+      const settled =
+        !draggingRef.current &&
+        Math.abs(targetProgressRef.current - progressRef.current) < 0.0005 &&
+        Math.abs(autoSpeedRef.current) < 0.0005 &&
+        (desiredAutoSpeed === 0 || !visibleRef.current || reducedMotion.matches)
+      if ((!visibleRef.current || reducedMotion.matches) && settled) {
+        idleRef.current = true
+        frameId = 0
+        return
+      }
 
       const count = normalizedItems.length
       const half = count / 2
@@ -170,11 +195,19 @@ const InfiniteSpiral = ({
         const visualScale = scale * depthScale
         const depth = (z / Math.max(responsiveRadius, 1) + 1) / 2
         const blur = edgeBlur * smoothstep(0.35, 1, edge)
-        card.style.transform = `translate(-50%, -50%) translate3d(${x}px, ${offset * verticalSpacing * fit}px, 0) rotateZ(${cardTilt}deg) scale(${visualScale})`
-        card.style.opacity = opacity.toFixed(3)
-        card.style.filter = blur > 0.01 ? `blur(${blur.toFixed(2)}px)` : 'none'
-        card.style.zIndex = String(Math.round(depth * 100000) + index)
-        card.style.pointerEvents = opacity > 0.25 ? 'auto' : 'none'
+        const transform = `translate(-50%, -50%) translate3d(${x}px, ${offset * verticalSpacing * fit}px, 0) rotateZ(${cardTilt}deg) scale(${visualScale})`
+        const opacityText = opacity.toFixed(3)
+        const filterText = blur > 0.01 ? `blur(${blur.toFixed(2)}px)` : 'none'
+        const zIndexText = String(Math.round(depth * 100000) + index)
+        const pointerEventsText = opacity > 0.25 ? 'auto' : 'none'
+        const stateKey = `${transform}|${opacityText}|${filterText}|${zIndexText}|${pointerEventsText}`
+        if (lastCardStateRef.current[index] === stateKey) return
+        lastCardStateRef.current[index] = stateKey
+        card.style.transform = transform
+        card.style.opacity = opacityText
+        card.style.filter = filterText
+        card.style.zIndex = zIndexText
+        card.style.pointerEvents = pointerEventsText
       })
 
       frameId = requestAnimationFrame(render)
@@ -235,9 +268,11 @@ const InfiniteSpiral = ({
       style={rootStyle}
       onMouseEnter={() => {
         hoveredRef.current = true
+        wakeRef.current()
       }}
       onMouseLeave={() => {
         hoveredRef.current = false
+        wakeRef.current()
       }}
       onPointerDown={(event) => {
         if (!dragEnabled || event.button !== 0) return
@@ -247,6 +282,7 @@ const InfiniteSpiral = ({
         targetProgressRef.current = progressRef.current
         event.currentTarget.setPointerCapture(event.pointerId)
         event.currentTarget.style.cursor = 'grabbing'
+        wakeRef.current()
       }}
       onPointerMove={(event) => {
         if (!draggingRef.current) return
@@ -254,9 +290,16 @@ const InfiniteSpiral = ({
         lastPointerYRef.current = event.clientY
         if (Math.abs(pointerDelta) > 0.5) dragMovedRef.current = true
         targetProgressRef.current -= pointerDelta / Math.max(verticalSpacing, 1)
+        wakeRef.current()
       }}
-      onPointerUp={stopDragging}
-      onPointerCancel={stopDragging}
+      onPointerUp={(event) => {
+        stopDragging(event)
+        wakeRef.current()
+      }}
+      onPointerCancel={(event) => {
+        stopDragging(event)
+        wakeRef.current()
+      }}
       onClickCapture={(event) => {
         if (!dragMovedRef.current) return
         event.preventDefault()

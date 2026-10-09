@@ -70,7 +70,7 @@ export default function Navbar() {
           WebkitBackdropFilter: solid ? 'blur(18px) saturate(140%)' : 'none',
           background: solid ? 'rgba(5, 6, 5, 0.75)' : 'transparent',
           borderBottom: solid ? '1px solid rgba(216, 182, 106, 0.18)' : '1px solid transparent',
-          transition: 'background 0.4s ease, border-color 0.4s ease, backdrop-filter 0.4s ease',
+          transition: 'background 0.4s ease, border-color 0.4s ease',
         }}
       >
         <nav

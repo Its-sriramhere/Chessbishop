@@ -12,11 +12,19 @@ export default function PostHeroAurora() {
   const [pastHero, setPastHero] = useState(false)
 
   useEffect(() => {
-    const update = () => setPastHero(window.scrollY > window.innerHeight * 0.8)
+    let raf = 0
+    const update = () => {
+      if (raf) return
+      raf = requestAnimationFrame(() => {
+        raf = 0
+        setPastHero(window.scrollY > window.innerHeight * 0.8)
+      })
+    }
     update()
     window.addEventListener('scroll', update, { passive: true })
     window.addEventListener('resize', update)
     return () => {
+      if (raf) cancelAnimationFrame(raf)
       window.removeEventListener('scroll', update)
       window.removeEventListener('resize', update)
     }
@@ -43,6 +51,7 @@ export default function PostHeroAurora() {
           right: '-6vw',
           background: 'radial-gradient(circle, rgba(99, 169, 133, 0.72), transparent 65%)',
           animation: 'ph-aurora-a 21s ease-in-out infinite alternate',
+          animationPlayState: pastHero ? 'running' : 'paused',
         }}
       />
       <div
@@ -54,6 +63,7 @@ export default function PostHeroAurora() {
           left: '-8vw',
           background: 'radial-gradient(circle, rgba(216, 182, 106, 0.5), transparent 65%)',
           animation: 'ph-aurora-b 25s ease-in-out infinite alternate',
+          animationPlayState: pastHero ? 'running' : 'paused',
         }}
       />
       <div
@@ -65,6 +75,7 @@ export default function PostHeroAurora() {
           left: '30%',
           background: 'radial-gradient(circle, rgba(23, 60, 43, 0.9), transparent 65%)',
           animation: 'ph-aurora-c 23s ease-in-out infinite alternate',
+          animationPlayState: pastHero ? 'running' : 'paused',
         }}
       />
       <style>{`

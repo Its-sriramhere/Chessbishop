@@ -8,6 +8,9 @@ type ScrollStackProps = {
 export default function ScrollStack({ cards, className = '' }: ScrollStackProps) {
   const ref = useRef<HTMLDivElement | null>(null)
   const cardStyles = useRef<CSSProperties[]>([])
+  const geometryRef = useRef({ top: 0, height: 1 })
+  const rafRef = useRef(0)
+  const lastStyleRef = useRef<string[]>([])
 
   useEffect(() => {
     const el = ref.current
@@ -22,28 +25,58 @@ export default function ScrollStack({ cards, className = '' }: ScrollStackProps)
       return
     }
 
-    const update = () => {
+    const measure = () => {
       const rect = el.getBoundingClientRect()
+      geometryRef.current = {
+        top: rect.top + window.scrollY,
+        height: Math.max(rect.height, 1),
+      }
+    }
+
+    const update = () => {
+      rafRef.current = 0
+      const { top, height } = geometryRef.current
+      const rectTop = top - window.scrollY
       cards.forEach((_, i) => {
         const node = nodes[i]
         if (!node) return
-        const progress = Math.min(Math.max((window.innerHeight * 0.62 - rect.top) / rect.height, 0), 1)
+        const progress = Math.min(Math.max((window.innerHeight * 0.62 - rectTop) / height, 0), 1)
         const offset = i * Math.min(progress * 1.6, 1) * 42
-        cardStyles.current[i] = {
-          transform: `translateY(${offset}px) scale(${1 + i * 0.004 * progress})`,
-          zIndex: i,
-        }
-        Object.assign(node.style, {
-          transform: cardStyles.current[i].transform,
-          zIndex: String(cardStyles.current[i].zIndex),
-        })
-        node.style.opacity = String(progress + 0.1)
+        const transform = `translateY(${offset}px) scale(${1 + i * 0.004 * progress})`
+        const opacity = String(progress + 0.1)
+        const zIndex = String(i)
+        const stateKey = `${transform}|${opacity}|${zIndex}`
+        if (lastStyleRef.current[i] === stateKey) return
+        lastStyleRef.current[i] = stateKey
+        cardStyles.current[i] = { transform, zIndex: i }
+        node.style.transform = transform
+        node.style.zIndex = zIndex
+        node.style.opacity = opacity
       })
     }
 
-    window.addEventListener('scroll', update, { passive: true })
-    update()
-    return () => window.removeEventListener('scroll', update)
+    const scheduleUpdate = () => {
+      if (rafRef.current) return
+      rafRef.current = requestAnimationFrame(update)
+    }
+
+    const handleResize = () => {
+      measure()
+      scheduleUpdate()
+    }
+
+    measure()
+    scheduleUpdate()
+    window.addEventListener('scroll', scheduleUpdate, { passive: true })
+    window.addEventListener('resize', handleResize)
+    const ro = typeof ResizeObserver !== 'undefined' ? new ResizeObserver(handleResize) : null
+    ro?.observe(el)
+    return () => {
+      if (rafRef.current) cancelAnimationFrame(rafRef.current)
+      window.removeEventListener('scroll', scheduleUpdate)
+      window.removeEventListener('resize', handleResize)
+      ro?.disconnect()
+    }
   }, [cards])
 
   return (

@@ -57,7 +57,7 @@ export default function CountUp({
     stiffness: 100,
   })
 
-  const isInView = useInView(ref, { once: false, margin: '0px' })
+  const isInView = useInView(ref, { once: true, margin: '0px' })
 
   useEffect(() => {
     if (ref.current) ref.current.textContent = String(formatNumber(direction === 'down' ? to : from, separator))
