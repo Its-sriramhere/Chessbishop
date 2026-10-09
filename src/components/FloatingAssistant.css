@@ -3,10 +3,13 @@
   left: 0;
   top: 0;
   z-index: 95;
-  will-change: transform;
   transition:
     opacity 0.3s ease,
     visibility 0.3s ease;
+}
+
+.cb-fab.is-dragging {
+  will-change: transform;
 }
 
 html[data-menu-open='1'] .cb-fab {
@@ -233,5 +236,11 @@ html.cb-fab-dragging {
   .cb-fab__item,
   .cb-fab__label {
     transition: none !important;
+  }
+}
+
+@media (max-width: 640px) {
+  .cb-fab__logo {
+    filter: none;
   }
 }

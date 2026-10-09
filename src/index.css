@@ -1758,8 +1758,8 @@
   }
 
   .cb-hero-bg {
-    background-image: url('/bg-image-960.jpg');
-    background-position: 18% 50%;
+    background-image: url('/bg-image-mobile.jpg');
+    background-position: center;
   }
 
   .aurora-layer {

@@ -108,9 +108,11 @@ export default function FloatingAssistant() {
   const rootRef = useRef<HTMLDivElement | null>(null)
   const btnRef = useRef<HTMLButtonElement | null>(null)
   const itemRefs = useRef<Array<HTMLAnchorElement | null>>([])
-  const dragRef = useRef<{ id: number; sx: number; sy: number; bx: number; by: number; moved: boolean } | null>(null)
+  const dragRef = useRef<{ id: number; sx: number; sy: number; bx: number; by: number; moved: boolean; cx: number; cy: number } | null>(null)
+  const dragRafRef = useRef(0)
   const posRef = useRef({ x: 0, y: 0 })
   const firstRef = useRef(true)
+  const appliedRef = useRef({ x: -1, y: -1, transition: '' })
 
   const [place, setPlace] = useState<Place>(() => readStoredPlace() ?? { side: 'right', yRatio: 1 })
   const [vp, setVp] = useState(() => ({ w: window.innerWidth, h: window.innerHeight }))
@@ -127,15 +129,26 @@ export default function FloatingAssistant() {
   }, [])
 
   useEffect(() => {
+    let timer = 0
     const update = () => {
-      setVp({ w: window.innerWidth, h: window.innerHeight })
+      const w = window.innerWidth
+      const h = window.innerHeight
+      setVp((prev) => {
+        if (prev.w === w && Math.abs(prev.h - h) < 8) return prev
+        return { w, h }
+      })
       setInsets(readInsets())
     }
-    window.addEventListener('resize', update)
-    window.addEventListener('orientationchange', update)
+    const schedule = () => {
+      window.clearTimeout(timer)
+      timer = window.setTimeout(update, 150)
+    }
+    window.addEventListener('resize', schedule)
+    window.addEventListener('orientationchange', schedule)
     return () => {
-      window.removeEventListener('resize', update)
-      window.removeEventListener('orientationchange', update)
+      window.clearTimeout(timer)
+      window.removeEventListener('resize', schedule)
+      window.removeEventListener('orientationchange', schedule)
     }
   }, [])
 
@@ -144,6 +157,10 @@ export default function FloatingAssistant() {
   }, [pathname])
 
   useEffect(() => {
+    if (dragRafRef.current) {
+      cancelAnimationFrame(dragRafRef.current)
+      dragRafRef.current = 0
+    }
     return () => {
       document.documentElement.classList.remove('cb-fab-dragging')
     }
@@ -166,8 +183,17 @@ export default function FloatingAssistant() {
   useLayoutEffect(() => {
     const el = rootRef.current
     if (!el) return
-    el.style.transition = firstRef.current || reduced ? 'none' : 'transform 0.34s cubic-bezier(0.22,1,0.36,1)'
-    el.style.transform = `translate3d(${geo.x}px, ${geo.y}px, 0)`
+    const transition = firstRef.current || reduced ? 'none' : 'transform 0.34s cubic-bezier(0.22,1,0.36,1)'
+    const x = Math.round(geo.x)
+    const y = Math.round(geo.y)
+    const prev = appliedRef.current
+    if (prev.x === x && prev.y === y && prev.transition === transition) {
+      firstRef.current = false
+      return
+    }
+    appliedRef.current = { x, y, transition }
+    el.style.transition = transition
+    el.style.transform = `translate3d(${x}px, ${y}px, 0)`
     firstRef.current = false
   }, [geo.x, geo.y, reduced])
 
@@ -206,6 +232,30 @@ export default function FloatingAssistant() {
     }
   }, [open, closeMenu])
 
+  const geoRef = useRef(geo)
+  geoRef.current = geo
+
+  const flushDragMove = useCallback(() => {
+    dragRafRef.current = 0
+    const dd = dragRef.current
+    const el = rootRef.current
+    if (!dd || !el) return
+    const g = geoRef.current
+    const dx = dd.cx - dd.sx
+    const dy = dd.cy - dd.sy
+    if (!dd.moved) {
+      if (Math.hypot(dx, dy) < DRAG_THRESHOLD) return
+      dd.moved = true
+      el.classList.add('is-dragging')
+      document.documentElement.classList.add('cb-fab-dragging')
+      el.style.transition = 'none'
+    }
+    const nx = clamp(dd.bx + dx, g.minX, g.maxX)
+    const ny = clamp(dd.by + dy, g.minY, g.maxY)
+    posRef.current = { x: nx, y: ny }
+    el.style.transform = `translate3d(${nx}px, ${ny}px, 0)`
+  }, [])
+
   const onPointerDown = (e: ReactPointerEvent<HTMLButtonElement>) => {
     if (e.pointerType === 'mouse' && e.button !== 0) return
     const el = rootRef.current
@@ -215,30 +265,26 @@ export default function FloatingAssistant() {
     } catch {
       /* capture unsupported */
     }
-    dragRef.current = { id: e.pointerId, sx: e.clientX, sy: e.clientY, bx: geo.x, by: geo.y, moved: false }
+    dragRef.current = { id: e.pointerId, sx: e.clientX, sy: e.clientY, bx: geo.x, by: geo.y, moved: false, cx: e.clientX, cy: e.clientY }
   }
 
   const onPointerMove = (e: ReactPointerEvent<HTMLButtonElement>) => {
     const d = dragRef.current
     if (!d || d.id !== e.pointerId || open) return
-    const dx = e.clientX - d.sx
-    const dy = e.clientY - d.sy
-    if (!d.moved) {
-      if (Math.hypot(dx, dy) < DRAG_THRESHOLD) return
-      d.moved = true
-      rootRef.current?.classList.add('is-dragging')
-      document.documentElement.classList.add('cb-fab-dragging')
-      if (rootRef.current) rootRef.current.style.transition = 'none'
-    }
-    const nx = clamp(d.bx + dx, geo.minX, geo.maxX)
-    const ny = clamp(d.by + dy, geo.minY, geo.maxY)
-    posRef.current = { x: nx, y: ny }
-    if (rootRef.current) rootRef.current.style.transform = `translate3d(${nx}px, ${ny}px, 0)`
+    d.cx = e.clientX
+    d.cy = e.clientY
+    if (dragRafRef.current) return
+    dragRafRef.current = requestAnimationFrame(flushDragMove)
   }
 
   const endDrag = (e: ReactPointerEvent<HTMLButtonElement>, cancelled: boolean) => {
     const d = dragRef.current
     if (!d || d.id !== e.pointerId) return
+    if (dragRafRef.current) {
+      cancelAnimationFrame(dragRafRef.current)
+      dragRafRef.current = 0
+      flushDragMove()
+    }
     dragRef.current = null
     rootRef.current?.classList.remove('is-dragging')
     document.documentElement.classList.remove('cb-fab-dragging')
